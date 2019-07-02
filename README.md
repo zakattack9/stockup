@@ -6,6 +6,7 @@ A stock application utilizing APIs and web scraping for gathering stock news and
 - MarketWatch
 - Bloomberg
 - Seeking Alpha
+- TheStreet
 - CNBC
 - Motley Fool
 
