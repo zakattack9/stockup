@@ -6,38 +6,42 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 app.get('/scrape', function (req, res) {
-  console.log("hellow workd")
+  console.log("hello world")
+  
+  let stockSymbol = 'AAPL';
   let urls = [
-    'https://seekingalpha.com/symbol/',
-    'https://www.marketwatch.com/investing/stock/',
-    'https://finance.yahoo.com/quote/'
+    `https://seekingalpha.com/symbol/${stockSymbol}`,
+    `https://www.marketwatch.com/investing/stock/${stockSymbol}`,
+    `https://finance.yahoo.com/quote/${stockSymbol}`,
+    `https://www.bloomberg.com/quote/${stockSymbol}:US`,
+    `https://www.thestreet.com/quote/${stockSymbol}`,
+    `https://www.fool.com/quote/${stockSymbol}`
   ];
 
-  let url = 'https://seekingalpha.com/symbol/AAPL';
+  // request(url, function (error, response, html) {
+  //   if (!error) {
+  //     console.log(response)
+  //     var $ = cheerio.load(html);
 
-  request(url, function (error, response, html) {
-    if (!error) {
-      console.log(response)
-      var $ = cheerio.load(html);
+  //     //let articleTitle, articleData, articleLink;
+  //     //var json = { title: "", release: "", rating: "" };
 
-      //let articleTitle, articleData, articleLink;
-      //var json = { title: "", release: "", rating: "" };
+  //     console.log($)
+  //   } else {
+  //     console.log(error)
+  //   }
+  // })
 
-      console.log($)
-    } else {
-      console.log(error)
-    }
+  axios.get(urls[0])
+  .then((response) => {
+    // Load the web page source code into a cheerio instance
+    const $ = cheerio.load(response.data)
+
+    console.log(response.data)
   })
-
-  // axios.get('https://buttercms.com/docs/api/').then((response) => {
-  //   // Load the web page source code into a cheerio instance
-  //   const $ = cheerio.load(response.data)
-
-  //   console.log(response.data)
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // })
+  .catch((err) => {
+    console.log(err);
+  })
 
 
 })
