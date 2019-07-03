@@ -33,5 +33,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakattack9/stocks-scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zakattack9/stocks-scraper/issues"
+  },
+  "homepage": "https://github.com/zakattack9/stocks-scraper#readme",
+  "keywords": []
 }
