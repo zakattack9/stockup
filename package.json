@@ -5,13 +5,17 @@
   "main": "server.js",
   "private": true,
   "dependencies": {
+    "axios": "latest",
+    "captcha-solver": "0.0.6",
+    "cheerio": "latest",
+    "cloudscraper": "^4.1.2",
+    "express": "latest",
+    "puppeteer": "^1.18.1",
+    "random-useragent": "^0.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
-    "express": "latest",
-    "request": "latest",
-    "cheerio": "latest",
-    "axios": "latest"
+    "request": "^2.88.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,7 +1,7 @@
 const express = require('express');
 const request = require('request');
+const cloudscraper = require('cloudscraper');
 const cheerio = require('cheerio');
-// const axios = require('axios');
 const app = express();
 const port = process.env.PORT || 8000;
 
@@ -18,37 +18,36 @@ app.get('/scrape', function (req, res) {
     `https://www.bloomberg.com/quote/${stockSymbol}:US` // captcha
   ];
 
-  request(urls[4], function (error, response, html) {
-    if (!error) {
-      console.log(html)
-      var $ = cheerio.load(html);
+  // using cloudscraper to bypass captchas
+  cloudscraper.get(urls[4])
+    .then(html => {
+      // console.log(html)
+      let $ = cheerio.load(html);
+      let articles = [];
 
-      //let articleTitle, articleData, articleLink;
-      //var json = { title: "", release: "", rating: "" };
-      $('.symbol_article').each((index, val) => {
-        console.log("SYMBOL ARTICLE", $(val).children().first().text())
+      // scrapes articles from Seeking Alpha's "Analysis" section
+      $('.content_block_investment_views ul .symbol_item .content .symbol_article').each((index, val) => {
+        let articleObj = {};
+        articleObj.title = $(val).children().first().text();
+        articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().attr('href');
+        articleObj.date = $(val).children().last().text().split("•")[1];
+        articles.push(articleObj);
       })
-      // console.log($('.symbol_article'));
-      // console.log("SYMBOL ARTICLE", $('.symbol_article'))
-    } else {
-      console.log(error)
-    }
-  })
 
-  // axios.get(urls[0])
-  //   .then((response) => {
-  //     // Load the web page source code into a cheerio instance
-  //     const $ = cheerio.load(response.data)
-
-  //     console.log(response.data)
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-
-
+      // scrapes articles from Seeking Alpha's "News" section
+      $('.symbol_latest_articles #symbol-page-latest .symbol_item .content').each((index, val) => {
+        let articleObj = {};
+        articleObj.title = $(val).children().first().children().text();
+        articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().children().attr('href');
+        articleObj.date = $(val).children().last().text().split("•")[1];
+        articles.push(articleObj);
+      })
+      console.log(articles);
+    })
+    .catch(err => {
+      console.log(err);
+    })
 })
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 module.exports = app;
