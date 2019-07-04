@@ -1,6 +1,6 @@
 const express = require('express');
 const request = require('request');
-const cloudscraper = require('cloudscraper');
+const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
 const port = process.env.PORT || 8000;
@@ -10,43 +10,92 @@ app.get('/scrape', function (req, res) {
 
   let stockSymbol = 'AAPL';
   let urls = [
-    `https://www.marketwatch.com/investing/stock/${stockSymbol}`,
-    `https://www.fool.com/quote/${stockSymbol}`,
-    `https://finance.yahoo.com/quote/${stockSymbol}`,
-    `https://www.thestreet.com/quote/${stockSymbol}.html`, // 404
-    `https://seekingalpha.com/symbol/${stockSymbol}`, // captcha
-    `https://www.bloomberg.com/quote/${stockSymbol}:US` // captcha
+    { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
+    { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },
+    { id: 3, url: `https://finance.yahoo.com/quote/${stockSymbol}` },
+    { id: 4, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
+    { id: 5, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
+    { id: 6, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
   ];
 
-  // using cloudscraper to bypass captchas
-  cloudscraper.get(urls[4])
-    .then(html => {
-      // console.log(html)
-      let $ = cheerio.load(html);
-      let articles = [];
 
-      // scrapes articles from Seeking Alpha's "Analysis" section
-      $('.content_block_investment_views ul .symbol_item .content .symbol_article').each((index, val) => {
-        let articleObj = {};
-        articleObj.title = $(val).children().first().text();
-        articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().attr('href');
-        articleObj.date = $(val).children().last().text().split("•")[1];
-        articles.push(articleObj);
-      })
 
-      // scrapes articles from Seeking Alpha's "News" section
-      $('.symbol_latest_articles #symbol-page-latest .symbol_item .content').each((index, val) => {
-        let articleObj = {};
-        articleObj.title = $(val).children().first().children().text();
-        articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().children().attr('href');
-        articleObj.date = $(val).children().last().text().split("•")[1];
-        articles.push(articleObj);
-      })
-      console.log(articles);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  let allRequests = [];
+  urls.forEach(url => {
+    allRequests.push(stockScraper(url.id, url.url));
+  });
+
+  function stockScraper(urlId, url) {
+    return new Promise((resolve, reject) => {
+      switch (urlId) { // handles data scraping for different sites
+        case 1: // MarketWatch
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
+
+              // scrapes 10 latest articles from MarketWatch's "Recent News" section
+              $('.collection__list .element--article .article__content').each((index, val) => {
+                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                let articleObj = {};
+                articleObj.title = $(val).children().first().children().text();
+                articleObj.link = $(val).find('.article__headline').children().first().attr('href');
+                articleObj.date = $(val).find('.article__details').find('.article__timestamp').text();
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(...articles);
+            })
+          break;
+        case 2: // Motley Fool
+          break;
+        case 3: // Yahoo Finance
+          break;
+        case 4: // TheStreet
+
+          break;
+        case 5: // Seeking Alpha
+          cloudscraper.get(url)
+            .then(html => {
+              // console.log(html)
+              let $ = cheerio.load(html);
+              let articles = [];
+
+              // scrapes articles from Seeking Alpha's "Analysis" section
+              $('.content_block_investment_views ul .symbol_item .content .symbol_article').each((index, val) => {
+                let articleObj = {};
+                articleObj.title = $(val).children().first().text();
+                articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().attr('href');
+                articleObj.date = $(val).children().last().text().split("•")[1];
+                articles.push(articleObj);
+              })
+
+              // scrapes articles from Seeking Alpha's "News" section
+              $('.symbol_latest_articles #symbol-page-latest .symbol_item .content').each((index, val) => {
+                let articleObj = {};
+                articleObj.title = $(val).children().first().children().text();
+                articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().children().attr('href');
+                articleObj.date = $(val).children().last().text().split("•")[1];
+                articles.push(articleObj);
+              })
+              // console.log(articles);
+              resolve(...articles);
+            })
+          break;
+        case 6: // Bloomberg
+          break;
+        default:
+          reject('Something went wrong with the scraper, or the URL is not included in the scraper');
+      }
+    });
+  };
+
+  Promise.all(allRequests).then(res => {
+    // return data to front-end
+  })
+
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
