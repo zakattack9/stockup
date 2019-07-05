@@ -1,3 +1,10 @@
+.verticallyCenter {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-55%);
+}
+
 .stockWrapper {
   /* background-color: yellow; */
   margin: 2.2em 0;

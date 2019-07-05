@@ -30,10 +30,3 @@ html, body {
   float: left;
   position: relative;
 }
-
-.verticallyCenter {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-55%);
-}
