@@ -18,11 +18,10 @@ app.get('/scrape', function (req, res) {
     { id: 6, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
   ];
 
-
-
-  let allRequests = [];
-  urls.forEach(url => {
-    allRequests.push(stockScraper(url.id, url.url));
+  let allArticles = [];
+  urls.forEach(url => { // asynchronously scrapes articles from urls
+    // utilizes promises to push results to one array
+    allArticles.push(stockScraper(url.id, url.url));
   });
 
   function stockScraper(urlId, url) {
@@ -46,10 +45,29 @@ app.get('/scrape', function (req, res) {
                 articleCount++;
               })
 
-              resolve(...articles);
+              resolve(articles);
             })
           break;
         case 2: // Motley Fool
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
+
+              // scrapes 10 latest articles from The Motley Fool's "News & Analysis" section
+              $('.list-content article .text').each((index, val) => {
+                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                let articleObj = {};
+                articleObj.title = $(val).find('h4').text();
+                articleObj.link = 'https://www.fool.com/' + $(val).find('h4').children().attr('href');
+                articleObj.date = $(val).find('.story-date-author').text().split("|")[1].trim();
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(articles);
+            })
           break;
         case 3: // Yahoo Finance
           break;
@@ -81,7 +99,7 @@ app.get('/scrape', function (req, res) {
                 articles.push(articleObj);
               })
               // console.log(articles);
-              resolve(...articles);
+              resolve(articles);
             })
           break;
         case 6: // Bloomberg
@@ -92,8 +110,9 @@ app.get('/scrape', function (req, res) {
     });
   };
 
-  Promise.all(allRequests).then(res => {
+  Promise.all(allArticles).then(artilces => { // executes after all asynchronous scraping has finished
     // return data to front-end
+    console.log(articles);
   })
 
 })
