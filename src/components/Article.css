@@ -1,0 +1,16 @@
+.Article {
+  margin: 2em 0;
+}
+
+.articleTitle {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: rgb(110, 110, 110);
+  line-height: 1.7em;
+}
+
+.articleDate {
+  font-size: 0.9em;
+  color: #898989;
+  /* font-style: italic; */
+}

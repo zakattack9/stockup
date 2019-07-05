@@ -1,0 +1,16 @@
+.statWrapper {
+  margin: 1.5em 0;
+}
+
+.statName {
+  font-size: 0.9em;
+  font-weight: 100;
+  font-style: italic;
+  color: #a8a8a8;
+}
+
+.statData {
+  font-size: 1.05em;
+  font-weight: 100;
+  color: #6b6b6b;
+}

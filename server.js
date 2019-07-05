@@ -113,6 +113,7 @@ app.get('/scrape', function (req, res) {
   Promise.all(allArticles).then(artilces => { // executes after all asynchronous scraping has finished
     // return data to front-end
     console.log(articles);
+    res.send(articles);
   })
 
 })

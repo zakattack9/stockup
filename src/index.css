@@ -1,13 +1,39 @@
-body {
+html, body {
+  font-family: Helvetica;
+  font-size: 1em;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+#root {
+  height: 100%;
+}
+
+.App {
+  height: 100%;
+}
+
+.StockData {
+  height: 100%;
+  width: 35%;
+  /* background-color: aqua; */
+  float: left;
+  text-align: right;
+  position: relative;
+}
+
+.StockArticles {
+  height: 100%;
+  width: 65%;
+  /* background-color: rgb(245, 245, 245); */
+  float: left;
+  position: relative;
+}
+
+.verticallyCenter {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-55%);
 }

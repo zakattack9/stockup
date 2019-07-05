@@ -1,0 +1,39 @@
+.TickerBackground {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  z-index: -10;
+}
+
+.tickerSymbol {
+  font-family: Helvetica-BoldOblique;
+  font-size: 40vw;
+  color: #F3F3F3;
+  position: relative;
+  top: 18.5vh;
+  left: -120px;
+  text-shadow: 70px 0px #EAEAEA;
+  text-align: left;
+}
+
+/* .tickerFront {
+  font-family: Helvetica-BoldOblique;
+  font-size: 40vw;
+  color: #F3F3F3;
+  position: relative;
+  top: 18.5vh;
+  left: -70px;
+  z-index: 1;
+} */
+
+/* .tickerBack {
+  font-family: Helvetica-BoldOblique;
+  font-size: 40vw;
+  color: #EAEAEA;
+  position: absolute;
+  top: 18.5vh;
+  left: -10px;
+  z-index: 0;
+} */

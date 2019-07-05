@@ -1,0 +1,28 @@
+.stockWrapper {
+  /* background-color: yellow; */
+  margin: 2.2em 0;
+}
+
+.marketIndex {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #9f9f9f;
+  padding-bottom: 0.1em;
+}
+
+.stockName {
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #484848;
+}
+
+.stockPrice {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #7a7a7a;
+}
+
+.percentChange {
+  font-size: 1.2em;
+  color: #61D474;
+}

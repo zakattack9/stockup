@@ -15,7 +15,7 @@ A stock application utilizing APIs and web scraping for gathering stock news and
 - https://www.worldtradingdata.com/documentation
 - https://www.alphavantage.co/documentation/
 
-### Web Scraping W/Cheerio Tutorials
+### Web Scraping w/Cheerio Tutorials
 - https://scotch.io/tutorials/scraping-the-web-with-node-js
 - https://buttercms.com/blog/web-scraping-with-nodejs-and-cheerio
 - http://zetcode.com/javascript/cheerio/
