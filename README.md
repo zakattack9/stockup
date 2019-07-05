@@ -1,4 +1,4 @@
-# Stocks Scraper
+# Stockup
 A stock application utilizing APIs and web scraping for gathering stock news and data
 
 ### News Sources
