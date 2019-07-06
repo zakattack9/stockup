@@ -1,10 +1,9 @@
 .articlesWrapper {
-  padding: 0 3em;
-  overflow: auto;
-  max-height: 80vh;
-
   width: 55%;
+  padding: 0 3em;
   position: absolute;
   top: 50%;
   transform: translateY(-45%);
+  overflow: auto;
+  max-height: 80vh;
 }

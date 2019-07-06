@@ -3,7 +3,6 @@ import StockStat from './StockStat';
 import TickerBackground from './TickerBackground';
 import './StockData.css';
 
-
 class StockData extends React.Component {
   render() {
     return (

@@ -70,6 +70,7 @@ app.get('/scrape', function (req, res) {
             })
           break;
         case 3: // Yahoo Finance
+
           break;
         case 4: // TheStreet
 
@@ -103,6 +104,7 @@ app.get('/scrape', function (req, res) {
             })
           break;
         case 6: // Bloomberg
+        
           break;
         default:
           reject('Something went wrong with the scraper, or the URL is not included in the scraper');
@@ -110,7 +112,7 @@ app.get('/scrape', function (req, res) {
     });
   };
 
-  Promise.all(allArticles).then(artilces => { // executes after all asynchronous scraping has finished
+  Promise.all(allArticles).then(articles => { // executes after all asynchronous scraping has finished
     // return data to front-end
     console.log(articles);
     res.send(articles);
