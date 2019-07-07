@@ -30,3 +30,29 @@ html, body {
   float: left;
   position: relative;
 }
+
+.stockupIcon {
+  position: absolute;
+  top: 1.5em;
+  left: 1.5em;
+  width: 2%;
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.stockupIcon:hover {
+  opacity: 1;
+}
+
+.addIcon {
+  position: absolute;
+  top: 1.5em;
+  right: 1.5em;
+  width: 2%;
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.addIcon:hover {
+  opacity: 1;
+}
