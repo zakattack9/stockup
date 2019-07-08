@@ -4,7 +4,7 @@ import { stockGrouper, stocks } from './data.js';
 
 let groupedStocks = stockGrouper(stocks);
 
-function getStockData() {
+export function getStockData() {
   let stockData = [];
   let allRequests = []; // holds all pending API requests as a promise
 
@@ -28,4 +28,15 @@ function getStockData() {
 
   return stockData;
 }
-getStockData();
+// getStockData();
+
+// returns data for a single stock
+export async function searchStock(ticker) {
+  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
+    params: {
+      api_token: API_KEY,
+      symbol: ticker
+    }
+  })
+  return response.data.data[0];
+}

@@ -5,6 +5,7 @@
   overflow: hidden;
   width: 100%;
   z-index: -10;
+  animation: fadeUp 1.5s ease;
 }
 
 .tickerSymbol {
@@ -16,6 +17,17 @@
   left: -120px;
   text-shadow: 70px 0px #EAEAEA;
   text-align: left;
+}
+
+@keyframes fadeUp {
+  0% {
+    bottom: -3vh;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0;
+    opacity: 1;
+  }
 }
 
 /* .tickerFront {

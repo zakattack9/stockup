@@ -26,10 +26,11 @@
 .stockPrice {
   font-size: 1.6em;
   font-weight: bold;
-  color: #7a7a7a;
+  color: #707070;
 }
 
 .percentChange {
   font-size: 1.2em;
-  color: #61D474;
+  /* Color is determined by StockData component */
+  /* color: #61D474;  */
 }

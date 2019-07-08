@@ -4,7 +4,7 @@ export let stockGrouper = (stocks) => {
   let numGroups = Math.ceil(stocks.length / 5);
   for (let i = 0; i < numGroups; i++) {
     groupedStocks.push(stocks.splice(0, 5));
-    console.log(groupedStocks)
+    // console.log(groupedStocks)
   }
 
   return groupedStocks;

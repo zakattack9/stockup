@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   font-family: Helvetica;
   font-size: 1em;
   margin: 0;
@@ -35,7 +36,7 @@ html, body {
   position: absolute;
   top: 1.5em;
   left: 1.5em;
-  width: 2%;
+  width: 2.2em;
   opacity: 0.5;
   transition: 0.2s;
 }
@@ -48,11 +49,31 @@ html, body {
   position: absolute;
   top: 1.5em;
   right: 1.5em;
-  width: 2%;
+  width: 2.2em;
   opacity: 0.5;
   transition: 0.2s;
 }
 
 .addIcon:hover {
   opacity: 1;
+}
+
+.addIconText {
+  font-size: 0.85em;
+  font-weight: 100;
+  text-align: right;
+  color: white;
+  position: absolute;
+  top: 2.7em;
+  right: 5em;
+  width: 10em;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.addIcon:hover ~ .addIconText {
+  color: rgb(81, 211, 102);
+  /* color: #2E2E2E; */
+  opacity: 1;
+  top: 2.5em;
 }

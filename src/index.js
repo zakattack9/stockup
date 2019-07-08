@@ -13,6 +13,7 @@ const App = () => {
       <StockArticles />
       <img src={icon} alt="Stockup Icon" className="stockupIcon"/>
       <img src={addIcon} alt="Add Icon" className="addIcon"/>
+      <div className="addIconText">Add to Homepage</div>
     </div>
   );
 };

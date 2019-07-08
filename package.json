@@ -14,6 +14,7 @@
     "random-useragent": "^0.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-reveal": "^1.2.2",
     "react-scripts": "3.0.1",
     "request": "^2.88.0"
   },
