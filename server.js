@@ -3,7 +3,7 @@ const request = require('request');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 app.get('/scrape', function (req, res) {
   console.log("hello world")
@@ -104,7 +104,7 @@ app.get('/scrape', function (req, res) {
             })
           break;
         case 6: // Bloomberg
-        
+
           break;
         default:
           reject('Something went wrong with the scraper, or the URL is not included in the scraper');

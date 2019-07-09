@@ -2,9 +2,9 @@ import axios from 'axios';
 import API_KEY from './creds.js';
 import { stockGrouper, stocks } from './data.js';
 
-let groupedStocks = stockGrouper(stocks);
-
-export function getStockData() {
+export function getBatchStockData() {
+  // groups stocks first before making request
+  let groupedStocks = stockGrouper(stocks);
   let stockData = [];
   let allRequests = []; // holds all pending API requests as a promise
 
@@ -28,7 +28,9 @@ export function getStockData() {
 
   return stockData;
 }
-// getStockData();
+// getBatchStockData();
+
+
 
 // returns data for a single stock
 export async function searchStock(ticker) {

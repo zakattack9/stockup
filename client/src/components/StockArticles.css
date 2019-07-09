@@ -1,0 +1,10 @@
+.articlesWrapper {
+  width: 100%;
+  padding: 0 3em;
+  padding-right: 40%;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  overflow: auto;
+  max-height: 100vh;
+}

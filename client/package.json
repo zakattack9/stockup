@@ -1,0 +1,44 @@
+{
+  "name": "stockup",
+  "version": "0.1.0",
+  "description": "Stock data web scraper",
+  "private": true,
+  "proxy": "http://localhost:5000/",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-reveal": "^1.2.2",
+    "react-scripts": "3.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakattack9/stocks-scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zakattack9/stocks-scraper/issues"
+  },
+  "homepage": "https://github.com/zakattack9/stocks-scraper#readme"
+}

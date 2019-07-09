@@ -3,7 +3,7 @@ const request = require('request');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 app.get('/scrape', function (req, res) {
   console.log("hello world")
@@ -80,7 +80,7 @@ app.get('/scrape', function (req, res) {
                 if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
                 let articleObj = {};
                 articleObj.title = $(val).find('h4').text();
-                articleObj.link = 'https://www.fool.com/' + $(val).find('h4').children().attr('href');
+                articleObj.link = 'https://www.fool.com' + $(val).find('h4').children().attr('href');
                 articleObj.date = $(val).find('.story-date-author').text().split("|")[1].trim();
                 articles.push(articleObj);
                 articleCount++;
@@ -130,12 +130,23 @@ app.get('/scrape', function (req, res) {
     });
   };
 
-  Promise.all(allArticles).then(articles => {
-    // return data to front-end
-    console.log(articles);
-    res.send(articles);
-  })
+  // shuffles articles in array
+  // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
 
+  // return data to front-end
+  Promise.all(allArticles).then(articles => {
+    let allArticles = [];
+    articles.map(articlesArr => { allArticles.push(...articlesArr); });
+    res.send(shuffle(allArticles));
+    console.log(allArticles);
+  })
 
 })
 

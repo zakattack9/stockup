@@ -1,12 +1,20 @@
 .Article {
-  margin-bottom: 2em;
+  margin-bottom: 2.8em;
+}
+
+.Article:first-child {
+  margin-top: 13vh;
+}
+
+.Article a {
+  text-decoration: none;
 }
 
 .articleTitle {
   font-size: 1.2em;
   font-weight: 600;
   color: rgb(110, 110, 110);
-  line-height: 1.7em;
+  /* line-height: 1.3em; */
   transition: 0.2s;
 }
 
@@ -15,14 +23,15 @@
   color: rgb(85, 85, 85);
 }
 
-.Article:hover .articleDate {
-  font-size: 0.91em;
-  color: rgb(117, 117, 117);
-}
-
 .articleDate {
   font-size: 0.9em;
   color: #898989;
   transition: 0.2s;
-  /* font-style: italic; */
+  margin-top: 0.4em;
+  /* line-height: 1.8em; */
+}
+
+.Article:hover .articleDate {
+  font-size: 0.905em;
+  color: rgb(117, 117, 117);
 }

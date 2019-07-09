@@ -1,53 +1,36 @@
 {
-  "name": "stocks-grabber",
-  "version": "0.1.0",
-  "description": "Stock data web scraper",
-  "main": "server.js",
-  "private": true,
+  "name": "stockup-server",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "nodemon testserver.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "start": "node server.js"
+  },
   "dependencies": {
     "axios": "latest",
+    "body-parser": "^1.18.3",
     "captcha-solver": "0.0.6",
     "cheerio": "latest",
     "cloudscraper": "^4.1.2",
     "express": "latest",
     "puppeteer": "^1.18.1",
     "random-useragent": "^0.3.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-reveal": "^1.2.2",
-    "react-scripts": "3.0.1",
     "request": "^2.88.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "concurrently": "^4.1.1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "description": "A stock application utilizing APIs and web scraping for gathering stock news and data",
+  "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zakattack9/stocks-scraper.git"
+    "url": "git+https://github.com/zakattack9/stockup.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zakattack9/stocks-scraper/issues"
+    "url": "https://github.com/zakattack9/stockup/issues"
   },
-  "homepage": "https://github.com/zakattack9/stocks-scraper#readme",
-  "keywords": []
+  "homepage": "https://github.com/zakattack9/stockup#readme"
 }
