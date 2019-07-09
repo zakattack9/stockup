@@ -4,10 +4,26 @@ import Article from './Article';
 import './StockArticles.css';
 
 class StockArticles extends React.Component {
-  state = { articleData: null };
+  state = { articleData: null, articlesToFade: 0 };
 
   componentDidMount() {
     this.getArticleData();
+  }
+
+  componentDidUpdate() {
+    // determines what articles to fade in
+    if (this.state.articlesToFade === 0) {
+      let allArticles = document.getElementsByClassName('Article');
+      let articlesToFade = 0;
+      for (let article of allArticles) {
+        let bounding = article.getBoundingClientRect();
+        console.log("ARTICLE BOUNDING", bounding.top)
+        if (bounding.top <= window.innerHeight) {
+          articlesToFade++;
+        }
+      }
+      this.setState({ articlesToFade })
+    }
   }
 
   getArticleData = () => {
@@ -35,11 +51,14 @@ class StockArticles extends React.Component {
               return false;
             }
 
-            return <Article delay={i * 70} show={true} mount={true} key={i} title={article.title} date={article.date} link={article.link} />;
-            // if (i <= 9) {
-            //   return <Article delay={i * 70} show={true} mount={false} key={i} title={article.title} date={article.date} link={article.link} />;
-            // }
-            // return <Article delay={0} show={true} mount={true} key={i} title={article.title} date={article.date} link={article.link} />;
+            if (i + 1 <= this.state.articlesToFade) {
+              return <Article delay={i * 70} show={true} fade={true} key={i} title={article.title} date={article.date} link={article.link} />;
+            } else if (this.state.articlesToFade !== 0) {
+              return <Article delay={0} show={true} fade={true} key={i} title={article.title} date={article.date} link={article.link} />;
+            } else {
+              return <Article delay={0} show={false} fade={false} key={i} title={article.title} date={article.date} link={article.link} />;
+            }
+
           })}
 
           {/* <Article title="Apple's Biggest Opportunity Could Also Be Its Biggest Problem" date="Jun 30" />

@@ -4,7 +4,7 @@ import './Article.css';
 
 const Article = props => {
   return (
-    <Fade bottom distance={'10px'} delay={props.delay} appear={true} when={props.show} mountOnEnter={props.mount}>
+    <Fade bottom distance={'10px'} delay={props.delay} when={props.show} appear={props.fade}>
       <div className="Article">
         <a href={props.link} target="_blank">
           <div className="articleTitle">{props.title}</div>

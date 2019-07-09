@@ -53,19 +53,19 @@ class StockData extends React.Component {
           </Fade>
 
           <div className="stockStatsWrapper">
-            <StockStat name="High" data="$203.13" delay="120" />
-            <StockStat name="Low" data="$201.36" delay="240" />
-            <StockStat name="52 Wk High" data="$233.47" delay="360" />
-            <StockStat name="52 Wk Low" data="$142.00" delay="480" />
-            <StockStat name="Market Cap" data="$932.78B" delay="600" />
-            <StockStat name="Avg Volume" data="16.68M" delay="720" />
+            <StockStat name="High" data="$203.13" delay={120} />
+            <StockStat name="Low" data="$201.36" delay={240} />
+            <StockStat name="52 Wk High" data="$233.47" delay={360} />
+            <StockStat name="52 Wk Low" data="$142.00" delay={480} />
+            <StockStat name="Market Cap" data="$932.78B" delay={600} />
+            <StockStat name="Avg Volume" data="16.68M" delay={720} />
 
-            {/* <StockStat name="High" data={'$' + this.state.stockData.day_high} />
-              <StockStat name="Low" data={'$' + this.state.stockData.day_low} />
-              <StockStat name="52 Wk High" data={'$' + this.state.stockData['52_week_high']} />
-              <StockStat name="52 Wk Low" data={'$' + this.state.stockData['52_week_low']} />
-              <StockStat name="Market Cap" data={'$' + this.formatNumber(this.state.stockData.market_cap)} />
-              <StockStat name="Avg Volume" data={this.formatNumber(this.state.stockData.volume_avg)} /> */}
+            {/* <StockStat delay={120} name="High" data={'$' + this.state.stockData.day_high} />
+            <StockStat delay={240} name="Low" data={'$' + this.state.stockData.day_low} />
+            <StockStat delay={360} name="52 Wk High" data={'$' + this.state.stockData['52_week_high']} />
+            <StockStat delay={480} name="52 Wk Low" data={'$' + this.state.stockData['52_week_low']} />
+            <StockStat delay={600} name="Market Cap" data={'$' + this.formatNumber(this.state.stockData.market_cap)} />
+            <StockStat delay={720} name="Avg Volume" data={this.formatNumber(this.state.stockData.volume_avg)} /> */}
           </div>
         </div>
 
