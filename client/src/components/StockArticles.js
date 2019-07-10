@@ -19,11 +19,10 @@ class StockArticles extends React.Component {
       for (let article of allArticles) {
         let bounding = article.getBoundingClientRect();
         console.log(bounding.top)
-        if (bounding.top - 20 <= window.innerHeight) {
+        if (bounding.top <= window.innerHeight) {
           articlesToFade++;
         }
       }
-      console.log(articlesToFade);
       this.setState({ articlesToFade })
     }
   }
@@ -36,26 +35,21 @@ class StockArticles extends React.Component {
     })
   }
 
+  generateLoadingArticles = () => {
+    let loadingArticles = []; 
+    for (let i = 0; i < 15; i++) {
+      let randomWidth = Math.floor(Math.random() * 30) + 65 + '%'; 
+      loadingArticles.push(<LoadingArticle width={randomWidth} />)
+    }
+    return loadingArticles;
+  }
+
   render() {
     if (this.state.articleData === null) {
       return (
         <div className="StockArticles">
           <div className="articlesWrapper">
-            <LoadingArticle width="70%" />
-            <LoadingArticle width="80%" />
-            <LoadingArticle width="65%" />
-            <LoadingArticle width="60%" />
-            <LoadingArticle width="70%" />
-            <LoadingArticle width="65%" />
-            <LoadingArticle width="75%" />
-            <LoadingArticle width="80%" />
-            <LoadingArticle width="75%" />
-            <LoadingArticle width="80%" />
-            <LoadingArticle width="65%" />
-            <LoadingArticle width="75%" />
-            <LoadingArticle width="80%" />
-            <LoadingArticle width="80%" />
-            <LoadingArticle width="80%" />
+            {this.generateLoadingArticles()}
           </div>
         </div>
       )
@@ -65,26 +59,34 @@ class StockArticles extends React.Component {
       <div className="StockArticles">
         <div className="articlesWrapper">
           {this.state.articleData.map((article, i) => {
-
             if (this.state.articlesToFade === 0) {
-              console.log(i, "adding initial articles");
-              return <Article delay={0} show={false} fade={false} key={i} title={article.title} date={article.date} link={article.link} />;
-            } else if (i + 1 <= this.state.articlesToFade && this.state.articlesToFade !== 0) {
-              console.log(i, "adding fade articles");
-              return <Article delay={(1 + i) * 70} show={true} fade={true} key={i} title={article.title} date={article.date} link={article.link} />;
-            } else if (i + 1 > this.state.articlesToFade && this.state.articlesToFade !== 0) {
-              console.log(i, "adding regular articles");
-              return <Article delay={0} show={true} fade={true} key={i} title={article.title} date={article.date} link={article.link} />;
+              return <Article delay={0} 
+                              show={false}
+                              fade={false}
+                              key={i}
+                              title={article.title}
+                              date={article.date}
+                              link={article.link}
+                              site={article.site} />;
+            } else if (i + 1 <= this.state.articlesToFade) {
+              return <Article delay={i * 70}
+                              show={true}
+                              fade={true}
+                              key={i}
+                              title={article.title}
+                              date={article.date}
+                              link={article.link}
+                              site={article.site} />;
+            } else if (i + 1 > this.state.articlesToFade) {
+              return <Article delay={0}
+                              show={true}
+                              fade={true}
+                              key={i}
+                              title={article.title}
+                              date={article.date}
+                              link={article.link}
+                              site={article.site} />;
             }
-
-            // if (i + 1 <= this.state.articlesToFade && this.state.articlesToFade !== 0) {
-            //   return <Article delay={i * 70} show={true} fade={true} key={i} title={article.title} date={article.date} link={article.link} />;
-            // } else if (this.state.articlesToFade !== 0 && (i + 1) > this.state.articlesToFade) {
-            //   return <Article delay={0} show={true} fade={true} key={i} title={article.title} date={article.date} link={article.link} />;
-            // } else {
-            //   return <Article delay={0} show={false} fade={false} key={i} title={article.title} date={article.date} link={article.link} />;
-            // }
-
           })}
 
           {/* <Article title="Apple's Biggest Opportunity Could Also Be Its Biggest Problem" date="Jun 30" />

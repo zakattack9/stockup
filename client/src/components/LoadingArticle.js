@@ -4,7 +4,7 @@ import './LoadingArticle.css';
 
 const Article = props => {
   return (
-    <Fade left distance={'10px'}>
+    <Fade left distance={'15px'}>
       <div className="LoadingArticle">
         <div className="loadingTitle" style={{ width: props.width }}>{props.title}</div>
         <div className="loadingDate">{props.date}</div>

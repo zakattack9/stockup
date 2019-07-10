@@ -38,7 +38,7 @@ class StockData extends React.Component {
     return (
       <div className="StockData">
         <div className="verticallyCenter">
-          <Fade bottom delay={100} duration={1100} distance={'15px'}>
+          <Fade bottom delay={120} duration={1100} distance={'15px'}>
             <div className="stockWrapper">
               <div className="marketIndex">NASDAQ</div>
               <div className="stockName">Apple Inc.</div>

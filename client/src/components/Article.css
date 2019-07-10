@@ -19,7 +19,8 @@
 }
 
 .Article:hover .articleTitle {
-  font-size: 1.205em;
+  /* font-size: 1.205em; */
+  transform: scale(1.0025, 1.0025);
   color: rgb(85, 85, 85);
 }
 
@@ -32,6 +33,7 @@
 }
 
 .Article:hover .articleDate {
-  font-size: 0.905em;
-  color: rgb(117, 117, 117);
+  /* font-size: 0.905em; */
+  transform: scale(1.0025, 1.0025);
+  color: rgb(104, 104, 104);
 }

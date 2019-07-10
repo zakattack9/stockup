@@ -54,13 +54,14 @@ app.get('/scrape', function (req, res) {
               let articles = [];
               let articleCount = 0;
 
-              // scrapes 10 latest articles from MarketWatch's "Recent News" section
+              // scrapes 15 latest articles from MarketWatch's "Recent News" section
               $('.collection__list .element--article .article__content').each((index, val) => {
-                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                if (articleCount === 15) { return false } // stops pulling article data after 10 have been accumalated
                 let articleObj = {};
                 articleObj.title = $(val).children().first().children().text();
                 articleObj.link = $(val).find('.article__headline').children().first().attr('href');
                 articleObj.date = $(val).find('.article__details').find('.article__timestamp').text();
+                articleObj.site = "MarketWatch";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -82,6 +83,7 @@ app.get('/scrape', function (req, res) {
                 articleObj.title = $(val).find('h4').text();
                 articleObj.link = 'https://www.fool.com' + $(val).find('h4').children().attr('href');
                 articleObj.date = $(val).find('.story-date-author').text().split("|")[1].trim();
+                articleObj.site = "Motley Fool";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -107,6 +109,7 @@ app.get('/scrape', function (req, res) {
                 articleObj.title = $(val).children().first().text();
                 articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().attr('href');
                 articleObj.date = $(val).children().last().text().split("•")[1];
+                articleObj.site = "Seeking Alpha";
                 articles.push(articleObj);
               })
 
@@ -116,6 +119,7 @@ app.get('/scrape', function (req, res) {
                 articleObj.title = $(val).children().first().children().text();
                 articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().children().attr('href');
                 articleObj.date = $(val).children().last().text().split("•")[1];
+                articleObj.site = "Seeking Alpha";
                 articles.push(articleObj);
               })
               // console.log(articles);
@@ -143,7 +147,14 @@ app.get('/scrape', function (req, res) {
   // return data to front-end
   Promise.all(allArticles).then(articles => {
     let allArticles = [];
-    articles.map(articlesArr => { allArticles.push(...articlesArr); });
+    articles.map(articlesArr => {
+      articlesArr.map(article => {
+        if (article.title !== '') {
+          allArticles.push(article)
+        }
+      })
+    });
+    
     res.send(shuffle(allArticles));
     console.log(allArticles);
   })
