@@ -35,11 +35,13 @@ class StockArticles extends React.Component {
     })
   }
 
+  // generates loading ghost articles with a random width
   generateLoadingArticles = () => {
     let loadingArticles = []; 
     for (let i = 0; i < 15; i++) {
       let randomWidth = Math.floor(Math.random() * 30) + 65 + '%'; 
-      loadingArticles.push(<LoadingArticle width={randomWidth} />)
+      let randomDateWidth = Math.floor(Math.random() * 15) + 30 + '%';
+      loadingArticles.push(<LoadingArticle width={randomWidth} dateWidth = {randomDateWidth} />)
     }
     return loadingArticles;
   }

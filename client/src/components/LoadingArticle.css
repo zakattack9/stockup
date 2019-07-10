@@ -16,8 +16,8 @@
 }
 
 .loadingDate {
-  width: 30%;
-  height: 0.9em;
+  /* width: 30%; */
+  height: 0.8em;
   background-color: #bdbdbd;
   margin-top: 0.6em;
   border-radius: 50px;
