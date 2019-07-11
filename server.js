@@ -6,9 +6,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.get('/scrape', function (req, res) {
-  console.log("hello world")
+  console.log("hello world", req.query.ticker);
 
-  let stockSymbol = 'AAPL';
+  let stockSymbol = req.query.ticker;
   let urls = [
     { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
     { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },

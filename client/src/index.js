@@ -1,21 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StockArticles from './components/StockArticles';
-import StockData from './components/StockData';
-import icon from './assets/icon.png';
-import addIcon from './assets/addIcon.png'
-import './index.css';
+import Home from './Home';
+import StockNews from './StockNews';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 const App = () => {
   return (
-    <div className="App">
-      <StockData />
-      <StockArticles />
-      <img src={icon} alt="Stockup Icon" className="stockupIcon"/>
-      <img src={addIcon} alt="Add Icon" className="addIcon"/>
-      <div className="addIconText">Add to Homepage</div>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/stock" component={StockNews} />
+      </Switch>
+    </BrowserRouter>
   );
-};
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -18,7 +18,6 @@ class StockArticles extends React.Component {
       let articlesToFade = 0;
       for (let article of allArticles) {
         let bounding = article.getBoundingClientRect();
-        console.log(bounding.top)
         if (bounding.top <= window.innerHeight) {
           articlesToFade++;
         }
@@ -28,20 +27,22 @@ class StockArticles extends React.Component {
   }
 
   getArticleData = () => {
-    axios.get(`/scrape`).then(res => {
+    axios.get(`/scrape`, {
+      params: { ticker: 'AAPL' }
+    }).then(res => {
       let articleData = res.data;
       console.log(articleData)
       this.setState({ articleData })
     })
   }
 
-  // generates loading ghost articles with a random width
+  // generates 15 loading ghost articles with random widths
   generateLoadingArticles = () => {
-    let loadingArticles = []; 
+    let loadingArticles = [];
     for (let i = 0; i < 15; i++) {
-      let randomWidth = Math.floor(Math.random() * 30) + 65 + '%'; 
+      let randomWidth = Math.floor(Math.random() * 30) + 65 + '%';
       let randomDateWidth = Math.floor(Math.random() * 15) + 30 + '%';
-      loadingArticles.push(<LoadingArticle width={randomWidth} dateWidth = {randomDateWidth} />)
+      loadingArticles.push(<LoadingArticle width={randomWidth} dateWidth={randomDateWidth} />)
     }
     return loadingArticles;
   }
@@ -62,32 +63,32 @@ class StockArticles extends React.Component {
         <div className="articlesWrapper">
           {this.state.articleData.map((article, i) => {
             if (this.state.articlesToFade === 0) {
-              return <Article delay={0} 
-                              show={false}
-                              fade={false}
-                              key={i}
-                              title={article.title}
-                              date={article.date}
-                              link={article.link}
-                              site={article.site} />;
+              return <Article delay={0}
+                show={false}
+                fade={false}
+                key={i}
+                title={article.title}
+                date={article.date}
+                link={article.link}
+                site={article.site} />;
             } else if (i + 1 <= this.state.articlesToFade) {
               return <Article delay={i * 70}
-                              show={true}
-                              fade={true}
-                              key={i}
-                              title={article.title}
-                              date={article.date}
-                              link={article.link}
-                              site={article.site} />;
+                show={true}
+                fade={true}
+                key={i}
+                title={article.title}
+                date={article.date}
+                link={article.link}
+                site={article.site} />;
             } else if (i + 1 > this.state.articlesToFade) {
               return <Article delay={0}
-                              show={true}
-                              fade={true}
-                              key={i}
-                              title={article.title}
-                              date={article.date}
-                              link={article.link}
-                              site={article.site} />;
+                show={true}
+                fade={true}
+                key={i}
+                title={article.title}
+                date={article.date}
+                link={article.link}
+                site={article.site} />;
             }
           })}
 
