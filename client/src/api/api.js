@@ -2,6 +2,7 @@ import axios from 'axios';
 import API_KEY from './creds.js';
 import { stockGrouper, stocks } from './data.js';
 
+// returns data for any number of stocks
 export function getBatchStockData() {
   // groups stocks first before making request
   let groupedStocks = stockGrouper(stocks);
@@ -41,4 +42,15 @@ export async function searchStock(ticker) {
     }
   })
   return response.data.data[0];
+}
+
+// returns data for up to five stocks
+export async function searchFiveStocks(stocksArr) {
+  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
+    params: {
+      api_token: API_KEY,
+      symbol: stocksArr.toString()
+    }
+  })
+  return response.data.data;
 }

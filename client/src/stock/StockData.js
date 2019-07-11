@@ -6,10 +6,13 @@ import { searchStock } from '../api/api';
 import './StockData.css';
 
 class StockData extends React.Component {
-  state = { stockData: null };
+  constructor(props) {
+    super(props);
+    this.state = { stockData: null };
+  }
 
   componentDidMount() {
-    this.getStockData('AAPL');
+    this.getStockData(this.props.ticker);
   }
 
   getStockData = async (ticker) => {
@@ -60,8 +63,8 @@ class StockData extends React.Component {
             <StockStat name="Market Cap" data="$932.78B" delay={600} />
             <StockStat name="Avg Volume" data="16.68M" delay={720} /> */}
 
-            <StockStat delay={120} name="High" data={'$' + this.state.stockData.day_high} />
-            <StockStat delay={240} name="Low" data={'$' + this.state.stockData.day_low} />
+            <StockStat delay={120} name="Today's High" data={'$' + this.state.stockData.day_high} />
+            <StockStat delay={240} name="Today's Low" data={'$' + this.state.stockData.day_low} />
             <StockStat delay={360} name="52 Wk High" data={'$' + this.state.stockData['52_week_high']} />
             <StockStat delay={480} name="52 Wk Low" data={'$' + this.state.stockData['52_week_low']} />
             <StockStat delay={600} name="Market Cap" data={'$' + this.formatNumber(this.state.stockData.market_cap)} />
@@ -69,7 +72,7 @@ class StockData extends React.Component {
           </div>
         </div>
 
-        <TickerBackground ticker={"AAPL"} />
+        <TickerBackground ticker={this.props.ticker} />
       </div>
     );
   }

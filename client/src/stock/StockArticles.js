@@ -5,10 +5,13 @@ import LoadingArticle from './LoadingArticle';
 import './StockArticles.css';
 
 class StockArticles extends React.Component {
-  state = { articleData: null, articlesToFade: 0 };
+  constructor(props) {
+    super(props);
+    this.state = { articleData: null, articlesToFade: 0 };
+  }
 
   componentDidMount() {
-    this.getArticleData();
+    this.getArticleData(this.props.ticker);
   }
 
   componentDidUpdate() {
@@ -26,9 +29,9 @@ class StockArticles extends React.Component {
     }
   }
 
-  getArticleData = () => {
+  getArticleData = (ticker) => {
     axios.get(`/scrape`, {
-      params: { ticker: 'AAPL' }
+      params: { ticker }
     }).then(res => {
       let articleData = res.data;
       console.log(articleData)

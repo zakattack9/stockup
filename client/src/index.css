@@ -1,0 +1,11 @@
+html, body {
+  font-family: Helvetica;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}

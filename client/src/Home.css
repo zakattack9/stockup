@@ -1,0 +1,30 @@
+.Home {
+  height: 100%;
+  position: relative;
+}
+
+.marketIndexWrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.searchWrapper {
+  width: 100%;
+  position: absolute;
+  top: 33%;
+}
+
+.StockupLogo {
+  width: 15%;
+  margin: 0 auto;
+}
+
+.stockupPhrase {
+  font-weight: 100;
+  color: #6c6c6c;
+  text-align: center;
+}

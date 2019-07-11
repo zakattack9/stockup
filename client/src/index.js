@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Home from './Home';
 import StockNews from './StockNews';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import './index.css';
 
 const App = () => {
   return (

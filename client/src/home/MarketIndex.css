@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Helvetica Outline';
+  src: local('Helvetica Outline'), url(../fonts/HelveticaOutline.woff) format('woff');
+}
+
+.MarketIndex {
+  text-align: center;
+}
+
+.indexName {
+  font-family: 'Helvetica Outline';
+  font-size: 1.5em;
+  color: #535353;
+}
+
+.indexChange {
+  font-weight: 100;
+  margin-top: 0.05em;
+}
