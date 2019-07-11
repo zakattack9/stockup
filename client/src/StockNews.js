@@ -3,6 +3,7 @@ import StockArticles from './stock/StockArticles';
 import StockData from './stock/StockData';
 import icon from './assets/icon.png';
 import addIcon from './assets/addIcon.png'
+import { Link } from 'react-router-dom';
 import './StockNews.css';
 
 const StockNews = () => {
@@ -10,8 +11,10 @@ const StockNews = () => {
     <div className="StockNews">
       <StockData />
       <StockArticles />
-      <img src={icon} alt="Stockup Icon" className="stockupIcon"/>
-      <img src={addIcon} alt="Add Icon" className="addIcon"/>
+      <Link to="/">
+        <img src={icon} alt="Stockup Icon" className="stockupIcon" />
+      </Link>
+      <img src={addIcon} alt="Add Icon" className="addIcon" />
       <div className="addIconText">Add to Homepage</div>
     </div>
   );
