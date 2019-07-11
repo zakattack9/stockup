@@ -19,7 +19,7 @@ class StockData extends React.Component {
     let stockData = await searchStock(ticker);
     if (!stockData) {
       // creates dummy stock data if not found in stock API
-      // this allows the scraper to still run if stock does exist
+      // this allows the scraper to still run even if the stock isn't included in the API
       stockData = {};
       stockData.stock_exchange_short = '';
       stockData.name = ticker;
@@ -31,7 +31,6 @@ class StockData extends React.Component {
       stockData['52_week_low'] = "Unavailable";
       stockData.market_cap = "Unavailable";
       stockData.volume_avg = "Unavailable";
-      console.log("Stock not found")
     }
     this.setState({ stockData });
   }

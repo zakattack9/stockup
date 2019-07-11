@@ -29,3 +29,10 @@
   text-align: center;
   padding-top: 0.5em;
 }
+
+.errMsg {
+  font-size: 0.9em; 
+  color: #FF6565;
+  text-align: center;
+  padding-top: 1em;
+}

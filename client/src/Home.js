@@ -4,31 +4,49 @@ import MarketIndexes from './home/MarketIndex';
 import SearchBar from './home/SearchBar';
 import './Home.css';
 
-const Home = () => {
+
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { errMsg: ''};
+  }
+  
+  componentDidMount() {
+    if (this.props.location.state) {
+      let errMsg = this.props.location.state.errMsg
+      this.setState({ errMsg });
+    }
+  }
+  
   // up to FIVE market indexes
-  let marketIndexes = [
-    {name: "DJIA", ticker: "^DJI"},
-    {name: "NASDAQ", ticker: "^IXIC"},
-    {name: "S&P 500", ticker: "^GSPC"}
-  ];
+  getMarketIndexes() {
+    return [
+      {name: "DJIA", ticker: "^DJI"},
+      {name: "NASDAQ", ticker: "^IXIC"},
+      {name: "S&P 500", ticker: "^GSPC"}
+    ];
+  }
 
-  return (
-    <div className="Home">
-      <div className="marketIndexWrapper">
-        <MarketIndexes indexes={marketIndexes} />
+  render() {
+    return (
+      <div className="Home">
+        <div className="marketIndexWrapper">
+          <MarketIndexes indexes={this.getMarketIndexes()} />
+        </div>
+  
+        <div className="searchWrapper">
+          <Fade bottom distance={'15px'}>
+            <StockupLogo />
+            <div className="stockupPhrase">Stock up on all the news for the stocks you follow</div>
+          </Fade>
+          <Fade bottom distance={'15px'} delay={210}>
+            <SearchBar />
+            <div className="errMsg">{this.state.errMsg}</div>
+          </Fade>
+        </div>
       </div>
-
-      <div className="searchWrapper">
-        <Fade bottom distance={'15px'}>
-          <StockupLogo />
-          <div className="stockupPhrase">Stock up on all the news for the stocks you follow</div>
-        </Fade>
-        <Fade bottom distance={'15px'} delay={210}>
-          <SearchBar />
-        </Fade>
-      </div>
-    </div>
-  );
+    );
+  }
 };
 
 const StockupLogo = () => {

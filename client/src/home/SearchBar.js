@@ -11,13 +11,15 @@ class SearchBar extends React.Component {
   onFormSubmit = event => {
     // prevents page from refreshing itself upon submission of form
     event.preventDefault();
-    this.setState({ redirect: true });
+    if (this.state.term !== '') {
+      this.setState({ redirect: true });
+    }
   };
 
   render() {
     if (this.state.redirect) {
       return <Redirect to={{
-        pathname: '/stock',
+        pathname: '/stockup',
         state: { ticker: this.state.term.toUpperCase() }
       }} />
     }

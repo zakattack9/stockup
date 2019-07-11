@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Article from './Article';
 import LoadingArticle from './LoadingArticle';
+import { Redirect } from 'react-router-dom';
 import './StockArticles.css';
 
 class StockArticles extends React.Component {
@@ -31,11 +32,15 @@ class StockArticles extends React.Component {
 
   getArticleData = (ticker) => {
     axios.get(`/scrape`, {
-      params: { ticker }
+      params: { ticker },
+      timeout: 5000
     }).then(res => {
       let articleData = res.data;
-      console.log(articleData)
-      this.setState({ articleData })
+      console.log(articleData);
+      this.setState({ articleData });
+    })
+    .catch(err => {
+      this.setState({ articleData: false });
     })
   }
 
@@ -59,6 +64,14 @@ class StockArticles extends React.Component {
           </div>
         </div>
       )
+    }
+
+    // redirects back to search if no articles are found after timeout
+    if (!this.state.articleData) {
+      return <Redirect to={{
+        pathname: '/',
+        state: { errMsg: 'Stock does not exist, please search for another stock' }
+      }} />
     }
 
     return (
