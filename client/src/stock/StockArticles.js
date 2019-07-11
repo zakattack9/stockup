@@ -70,7 +70,7 @@ class StockArticles extends React.Component {
     if (!this.state.articleData) {
       return <Redirect to={{
         pathname: '/',
-        state: { errMsg: 'Stock does not exist, please search for another stock' }
+        state: { errMsg: 'The stock you searched for does not exist, please search for another stock' }
       }} />
     }
 

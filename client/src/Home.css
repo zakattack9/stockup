@@ -32,7 +32,9 @@
 
 .errMsg {
   font-size: 0.9em; 
+  font-weight: 100;
+  font-style: italic;
   color: #FF6565;
-  text-align: center;
   padding-top: 1em;
+  text-align: center;
 }
