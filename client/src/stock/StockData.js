@@ -24,6 +24,11 @@ class StockData extends React.Component {
     return +this.state.stockData.change_pct < 0 ? { color: '#FF6565' } : { color: '#61D474' };
   }
 
+  getPercentChange = () => { // determines whether to add "+" to positive percent change
+    let pctChange = this.state.stockData.change_pct;
+    return +pctChange > 0 ? `+${pctChange}` : pctChange;
+  }
+
   formatNumber = number => { // formats large numbers
     if (number < 9999) { return number; }
     if (number < 1000000) { return (number / 1000).toFixed(2) + "K"; }
@@ -51,7 +56,7 @@ class StockData extends React.Component {
               <div className="marketIndex">{this.state.stockData.stock_exchange_short}</div>
               <div className="stockName">{this.state.stockData.name}</div>
               <div className="stockPrice">${this.state.stockData.price}</div>
-              <div className="percentChange" style={this.getPercentChangeColor()}>{this.state.stockData.change_pct}%</div>
+              <div className="percentChange" style={this.getPercentChangeColor()}>{this.getPercentChange()}%</div>
             </div>
           </Fade>
 
