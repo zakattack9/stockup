@@ -8,11 +8,13 @@ import { Link } from 'react-router-dom';
 import './StockNews.css';
 
 class StockNews extends React.Component {
+  state = { ticker: this.props.location.state.ticker};
+
   render() {
     return (
       <div className="StockNews">
-        <StockData ticker={this.props.location.state.ticker} />
-        <StockArticles ticker={this.props.location.state.ticker} />
+        <StockData ticker={this.state.ticker} />
+        <StockArticles ticker={this.state.ticker} />
         <Fade top distance={'10px'}>
           <Link to="/">
             <img src={icon} alt="Stockup Icon" className="stockupIcon" />

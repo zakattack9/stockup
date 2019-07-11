@@ -19,7 +19,7 @@
 }
 
 .StockupLogo {
-  width: 15%;
+  width: 15em;
   margin: 0 auto;
 }
 
@@ -27,4 +27,5 @@
   font-weight: 100;
   color: #6c6c6c;
   text-align: center;
+  padding-top: 0.5em;
 }

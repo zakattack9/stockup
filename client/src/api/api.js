@@ -41,6 +41,13 @@ export async function searchStock(ticker) {
       symbol: ticker
     }
   })
+
+  if (response.data.Message) {
+    if (response.data.Message.toLowerCase().includes("error")) {
+      return false;
+    }
+  }
+
   return response.data.data[0];
 }
 
@@ -52,5 +59,6 @@ export async function searchFiveStocks(stocksArr) {
       symbol: stocksArr.toString()
     }
   })
+  
   return response.data.data;
 }

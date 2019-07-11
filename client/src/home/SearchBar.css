@@ -1,6 +1,6 @@
 .SearchBar {
   font-size: 0.8em;
-  width: 50%;
+  width: 30%;
   height: 1.4em;
   background-color: rgb(245, 245, 245);
   color: #757575;
@@ -8,8 +8,15 @@
   padding: 0.8em;
   padding-left: 2em;
   margin: 0 auto;
-  margin-top: 3em;
+  margin-top: 3.3em;
   border: 0;
   border-radius: 50px;
   outline: none;
+  transition: 0.45s;
+  /* text-align: center; */
+}
+
+.SearchBar:focus {
+  width: 29.5%;
+  background-color: rgb(237, 237, 237);
 }

@@ -17,6 +17,22 @@ class StockData extends React.Component {
 
   getStockData = async (ticker) => {
     let stockData = await searchStock(ticker);
+    if (!stockData) {
+      // creates dummy stock data if not found in stock API
+      // this allows the scraper to still run if stock does exist
+      stockData = {};
+      stockData.stock_exchange_short = '';
+      stockData.name = ticker;
+      stockData.price = "";
+      stockData.change_pct = "";
+      stockData.day_high = "Unavailable";
+      stockData.day_low = "Unavailable";
+      stockData['52_week_high'] = "Unavailable";
+      stockData['52_week_low'] = "Unavailable";
+      stockData.market_cap = "Unavailable";
+      stockData.volume_avg = "Unavailable";
+      console.log("Stock not found")
+    }
     this.setState({ stockData });
   }
 
@@ -26,7 +42,7 @@ class StockData extends React.Component {
 
   getPercentChange = () => { // determines whether to add "+" to positive percent change
     let pctChange = this.state.stockData.change_pct;
-    return +pctChange > 0 ? `+${pctChange}` : pctChange;
+    return +pctChange > 0 ? `+${pctChange}%` : `${pctChange}%`;
   }
 
   formatNumber = number => { // formats large numbers
@@ -36,6 +52,7 @@ class StockData extends React.Component {
     if (number < 1000000000) { return (number / 1000000).toFixed(2) + "M"; }
     if (number < 1000000000000) { return (number / 1000000000).toFixed(2) + "B"; }
     if (number < 10000000000000) { return (number / 1000000000000).toFixed(2) + "T"; }
+    if (number === 'Unavailable') { return number };
   }
 
   render() {
@@ -56,7 +73,7 @@ class StockData extends React.Component {
               <div className="marketIndex">{this.state.stockData.stock_exchange_short}</div>
               <div className="stockName">{this.state.stockData.name}</div>
               <div className="stockPrice">${this.state.stockData.price}</div>
-              <div className="percentChange" style={this.getPercentChangeColor()}>{this.getPercentChange()}%</div>
+              <div className="percentChange" style={this.getPercentChangeColor()}>{this.getPercentChange()}</div>
             </div>
           </Fade>
 

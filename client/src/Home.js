@@ -1,16 +1,21 @@
 import React from 'react';
 import Fade from 'react-reveal/Fade';
-import MarketIndex from './home/MarketIndex';
+import MarketIndexes from './home/MarketIndex';
 import SearchBar from './home/SearchBar';
 import './Home.css';
 
 const Home = () => {
+  // up to FIVE market indexes
+  let marketIndexes = [
+    {name: "DJIA", ticker: "^DJI"},
+    {name: "NASDAQ", ticker: "^IXIC"},
+    {name: "S&P 500", ticker: "^GSPC"}
+  ];
+
   return (
     <div className="Home">
       <div className="marketIndexWrapper">
-        <MarketIndex name="DJIA" index="^DJI" />
-        <MarketIndex name="NASDAQ" index="^IXIC" />
-        <MarketIndex name="S&P 500" index="^GSPC" />
+        <MarketIndexes indexes={marketIndexes} />
       </div>
 
       <div className="searchWrapper">

@@ -1,29 +1,30 @@
 import React from 'react';
-import { searchStock } from '../api/api';
+import { searchFiveStocks } from '../api/api';
 import Fade from 'react-reveal/Fade';
 import './MarketIndex.css';
 
-class MarketIndex extends React.Component {
+class MarketIndexes extends React.Component {
   constructor(props) {
     super(props);
     this.state = { indexData: null };
   }
 
   componentDidMount() {
-    this.getIndexData(this.props.index);
+    this.getIndexData(this.props.indexes);
   }
 
-  getIndexData = async (ticker) => {
-    let indexData = await searchStock(ticker);
+  getIndexData = async (indexArr) => {
+    let stocksArr = [];
+    indexArr.forEach(index => { stocksArr.push(index.ticker); })
+    let indexData = await searchFiveStocks(stocksArr);
     this.setState({ indexData });
   }
 
-  getPercentChangeColor = () => {
-    return +this.state.indexData.change_pct < 0 ? { color: '#FF6565' } : { color: '#61D474' };
+  getPercentChangeColor = (pctChange) => {
+    return +pctChange < 0 ? { color: '#FF6565' } : { color: '#61D474' };
   }
 
-  getPercentChange = () => { // determines whether to add "+" to positive percent change
-    let pctChange = this.state.indexData.change_pct;
+  getPercentChange = (pctChange) => { // determines whether to add "+" to positive percent change
     return +pctChange > 0 ? `+${pctChange}` : pctChange;
   }
 
@@ -34,13 +35,30 @@ class MarketIndex extends React.Component {
 
     return (
       <Fade top distance={'10px'} delay={150}>
-        <div className="MarketIndex">
-          <div className="indexName">{this.props.name}</div>
-          <div className="indexChange" style={this.getPercentChangeColor()}>{this.getPercentChange()}%</div>
-        </div>
+        {this.state.indexData.map((index, i) => {
+          let name;
+          this.props.indexes.map(obj => {
+            if (obj.ticker === index.symbol) {
+              name = obj.name;
+              return true;
+            }
+            return false;
+          })
+          
+          return <MarketIndex key={i} name={name} percent={this.getPercentChange(index.change_pct)} percentColor={this.getPercentChangeColor(index.change_pct)}/>;
+        })}
       </Fade>
     );
   }
 }
 
-export default MarketIndex;
+const MarketIndex = props => {
+  return (
+    <div className="MarketIndex">
+      <div className="indexName">{props.name}</div>
+      <div className="indexChange" style={props.percentColor}>{props.percent}%</div>
+    </div>
+  );
+}
+
+export default MarketIndexes;

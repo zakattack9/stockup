@@ -26,8 +26,9 @@ class SearchBar extends React.Component {
       <form onSubmit={this.onFormSubmit} className="form">
         <input
           className="SearchBar"
-          placeholder="Search ticker"
+          placeholder="Enter a ticker symbol"
           type="text"
+          maxLength="6"
           value={this.state.term}
           onChange={(e) => this.setState({ term: e.target.value })}
         />

@@ -93,6 +93,7 @@ class StockArticles extends React.Component {
                 link={article.link}
                 site={article.site} />;
             }
+            return false;
           })}
 
           {/* <Article title="Apple's Biggest Opportunity Could Also Be Its Biggest Problem" date="Jun 30" />
