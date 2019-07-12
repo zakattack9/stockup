@@ -5,7 +5,8 @@
     "client": "cd client && npm start",
     "server": "nodemon testserver.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node server.js"
+    "start": "node testserver.js",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "dependencies": {
     "axios": "latest",
@@ -14,6 +15,7 @@
     "cheerio": "latest",
     "cloudscraper": "^4.1.2",
     "express": "latest",
+    "path": "^0.12.7",
     "puppeteer": "^1.18.1",
     "random-useragent": "^0.3.1",
     "request": "^2.88.0"

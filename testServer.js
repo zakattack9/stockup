@@ -1,9 +1,13 @@
 const express = require('express');
+const path = require('path');
 const request = require('request');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
 const port = process.env.PORT || 5000;
+
+// Serve static files from the React app in Heroku
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/scrape', function (req, res) {
   console.log("hello world", req.query.ticker);
@@ -148,6 +152,7 @@ app.get('/scrape', function (req, res) {
   // return data to front-end
   Promise.all(allArticles).then(articles => {
     let allArticles = [];
+    // filter out articles without a title
     articles.map(articlesArr => {
       articlesArr.map(article => {
         if (article.title !== '') {
