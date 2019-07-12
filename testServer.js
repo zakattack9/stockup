@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 
 app.get('/scrape', function (req, res) {
   console.log("hello world", req.query.ticker);
+  // TODO: add functionality to handle searches for market indexes, ex. ^DJI, ^GSPC
 
   let stockSymbol = req.query.ticker;
   let urls = [

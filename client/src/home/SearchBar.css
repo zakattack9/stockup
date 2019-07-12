@@ -3,6 +3,7 @@
   width: 30%;
   height: 1.4em;
   background-color: rgb(245, 245, 245);
+  /* background-image: linear-gradient(rgb(250, 250, 250), rgb(245, 245, 245)); */
   color: #757575;
   display: block;
   padding: 0.8em;
@@ -17,6 +18,6 @@
 }
 
 .SearchBar:focus {
-  width: 29.5%;
+  width: 29.3%;
   background-color: rgb(237, 237, 237);
 }

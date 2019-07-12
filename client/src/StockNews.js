@@ -19,8 +19,10 @@ class StockNews extends React.Component {
           <Link to="/">
             <img src={icon} alt="Stockup Icon" className="stockupIcon" />
           </Link>
-          <img src={addIcon} alt="Add Icon" className="addIcon" />
-          <div className="addIconText">Add to Homepage</div>
+          <div>
+            <img src={addIcon} alt="Add Icon" className="addIcon" />
+            <div className="addIconText">Add to Homepage</div>
+          </div>
         </Fade>
       </div>
     );

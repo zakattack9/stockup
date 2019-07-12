@@ -1,29 +1,34 @@
 import React from 'react';
 import Fade from 'react-reveal/Fade';
+import Flip from 'react-reveal/Flip';
 import MarketIndexes from './home/MarketIndex';
 import SearchBar from './home/SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import './Home.css';
 
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { errMsg: ''};
+    this.state = { errMsg: '' };
   }
-  
+
   componentDidMount() {
     if (this.props.location.state) {
       let errMsg = this.props.location.state.errMsg
       this.setState({ errMsg });
     }
   }
-  
+
   // up to FIVE market indexes
   getMarketIndexes() {
     return [
-      {name: "DJIA", ticker: "^DJI"},
-      {name: "NASDAQ", ticker: "^IXIC"},
-      {name: "S&P 500", ticker: "^GSPC"}
+      { name: "Dow 30", ticker: "^DJI" },
+      { name: "S&P 500", ticker: "^GSPC" },
+      { name: "Nasdaq", ticker: "^IXIC" },
+      { name: "NYSE", ticker: "^NYA" },
+      { name: "Russell 2000", ticker: "^RUT" }
     ];
   }
 
@@ -33,7 +38,7 @@ class Home extends React.Component {
         <div className="marketIndexWrapper">
           <MarketIndexes indexes={this.getMarketIndexes()} />
         </div>
-  
+
         <div className="searchWrapper">
           <Fade bottom distance={'15px'}>
             <StockupLogo />
@@ -44,6 +49,14 @@ class Home extends React.Component {
             <div className="errMsg">{this.state.errMsg}</div>
           </Fade>
         </div>
+
+        <Flip bottom delay={450}>
+          <div className="githubLogo">
+            <a href="https://github.com/zakattack9/stockup" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faGithub} size="lg" />
+            </a>
+          </div>
+        </Flip>
       </div>
     );
   }

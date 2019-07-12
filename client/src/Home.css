@@ -38,3 +38,21 @@
   padding-top: 1em;
   text-align: center;
 }
+
+.githubLogo {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #343434;
+}
+
+.githubLogo a {
+  color: #343434;
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.githubLogo a:hover {
+  color: #1BBA35;
+}

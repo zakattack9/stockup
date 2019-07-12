@@ -33,15 +33,15 @@ class StockArticles extends React.Component {
   getArticleData = (ticker) => {
     axios.get(`/scrape`, {
       params: { ticker },
-      timeout: 5000
+      timeout: 6000
     }).then(res => {
       let articleData = res.data;
-      console.log(articleData);
+      // console.log(articleData);
       this.setState({ articleData });
     })
-    .catch(err => {
-      this.setState({ articleData: false });
-    })
+      .catch(err => {
+        this.setState({ articleData: false });
+      })
   }
 
   // generates 15 loading ghost articles with random widths
@@ -50,7 +50,7 @@ class StockArticles extends React.Component {
     for (let i = 0; i < 15; i++) {
       let randomWidth = Math.floor(Math.random() * 30) + 65 + '%';
       let randomDateWidth = Math.floor(Math.random() * 15) + 30 + '%';
-      loadingArticles.push(<LoadingArticle width={randomWidth} dateWidth={randomDateWidth} />)
+      loadingArticles.push(<LoadingArticle key={i} width={randomWidth} dateWidth={randomDateWidth} />)
     }
     return loadingArticles;
   }
@@ -70,7 +70,7 @@ class StockArticles extends React.Component {
     if (!this.state.articleData) {
       return <Redirect to={{
         pathname: '/',
-        state: { errMsg: 'The stock you searched for does not exist, please search for another stock' }
+        state: { errMsg: 'Unfortunately no articles were found, please search for another stock' }
       }} />
     }
 
@@ -79,28 +79,31 @@ class StockArticles extends React.Component {
         <div className="articlesWrapper">
           {this.state.articleData.map((article, i) => {
             if (this.state.articlesToFade === 0) {
-              return <Article delay={0}
+              return <Article
+                key={i}
+                delay={0}
                 show={false}
                 fade={false}
-                key={i}
                 title={article.title}
                 date={article.date}
                 link={article.link}
                 site={article.site} />;
             } else if (i + 1 <= this.state.articlesToFade) {
-              return <Article delay={i * 70}
+              return <Article
+                key={i}
+                delay={i * 70}
                 show={true}
                 fade={true}
-                key={i}
                 title={article.title}
                 date={article.date}
                 link={article.link}
                 site={article.site} />;
             } else if (i + 1 > this.state.articlesToFade) {
-              return <Article delay={0}
+              return <Article
+                key={i}
+                delay={0}
                 show={true}
                 fade={true}
-                key={i}
                 title={article.title}
                 date={article.date}
                 link={article.link}

@@ -8,7 +8,7 @@ const Article = props => {
       <div className="Article">
         <a href={props.link} target="_blank" rel="noopener noreferrer">
           <div className="articleTitle">{props.title}</div>
-          <div className="articleDate"> {props.site} • {props.date}</div>
+          <div className="articleDate">{props.site} • {props.date}</div>
         </a>
       </div>
     </Fade>

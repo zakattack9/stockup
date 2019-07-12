@@ -32,6 +32,7 @@ class StockData extends React.Component {
       stockData.market_cap = "Unavailable";
       stockData.volume_avg = "Unavailable";
     }
+    // console.log(stockData);
     this.setState({ stockData });
   }
 
@@ -45,12 +46,13 @@ class StockData extends React.Component {
   }
 
   formatNumber = number => { // formats large numbers
-    if (number < 9999) { return number; }
-    if (number < 1000000) { return (number / 1000).toFixed(2) + "K"; }
-    if (number < 10000000) { return (number / 1000000).toFixed(2) + "M"; }
-    if (number < 1000000000) { return (number / 1000000).toFixed(2) + "M"; }
-    if (number < 1000000000000) { return (number / 1000000000).toFixed(2) + "B"; }
-    if (number < 10000000000000) { return (number / 1000000000000).toFixed(2) + "T"; }
+    if (number < 9999) { return '$' + number; }
+    if (number < 1000000) { return '$' + (number / 1000).toFixed(2) + "K"; }
+    if (number < 10000000) { return '$' + (number / 1000000).toFixed(2) + "M"; }
+    if (number < 1000000000) { return '$' + (number / 1000000).toFixed(2) + "M"; }
+    if (number < 1000000000000) { return '$' + (number / 1000000000).toFixed(2) + "B"; }
+    if (number < 10000000000000) { return '$' + (number / 1000000000000).toFixed(2) + "T"; }
+    if (number === 'N/A') { return number };
     if (number === 'Unavailable') { return number };
   }
 
@@ -88,7 +90,7 @@ class StockData extends React.Component {
             <StockStat delay={240} name="Today's Low" data={'$' + this.state.stockData.day_low} />
             <StockStat delay={360} name="52 Wk High" data={'$' + this.state.stockData['52_week_high']} />
             <StockStat delay={480} name="52 Wk Low" data={'$' + this.state.stockData['52_week_low']} />
-            <StockStat delay={600} name="Market Cap" data={'$' + this.formatNumber(this.state.stockData.market_cap)} />
+            <StockStat delay={600} name="Market Cap" data={this.formatNumber(this.state.stockData.market_cap)} />
             <StockStat delay={720} name="Avg Volume" data={this.formatNumber(this.state.stockData.volume_avg)} />
           </div>
         </div>
