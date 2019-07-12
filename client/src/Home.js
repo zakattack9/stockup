@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import './Home.css';
 
-
 class Home extends React.Component {
   constructor(props) {
     super(props);

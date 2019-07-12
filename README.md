@@ -26,3 +26,9 @@ A stock application utilizing APIs and web scraping for gathering stock news and
 ### Puppeteer 
 - https://stackoverflow.com/questions/55678095/bypassing-captchas-with-headless-chrome-using-puppeteer
 - https://flaviocopes.com/web-scraping/
+
+### Running Locally 
+- navigate to project's *root* folder and run ```npm i```
+- navigate into *client* folder and run ```npm i```
+- in project's *root* folder run ```npm i --s concurrently```
+- start the project with ```yarn dev```
