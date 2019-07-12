@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import './SearchBar.css'
 
 class SearchBar extends React.Component {
@@ -7,7 +7,7 @@ class SearchBar extends React.Component {
     super(props);
     this.state = { term: '', redirect: false };
   }
-
+  
   onFormSubmit = event => {
     // prevents page from refreshing itself upon submission of form
     event.preventDefault();
@@ -15,9 +15,10 @@ class SearchBar extends React.Component {
       this.setState({ redirect: true });
     }
   };
-
+  
   render() {
     if (this.state.redirect) {
+      this.props.history.push('/');
       return <Redirect to={{
         pathname: '/stockup',
         state: { ticker: this.state.term.toUpperCase() }
@@ -39,4 +40,4 @@ class SearchBar extends React.Component {
   };
 };
 
-export default SearchBar;
+export default withRouter(SearchBar);

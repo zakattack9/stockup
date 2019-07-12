@@ -17,7 +17,7 @@ class StockArticles extends React.Component {
 
   componentDidUpdate() {
     // determines what articles to fade in
-    if (this.state.articlesToFade === 0) {
+    if (this.state.articlesToFade === 0 && this.state.articleData !== null) {
       let allArticles = document.getElementsByClassName('Article');
       let articlesToFade = 0;
       for (let article of allArticles) {
@@ -28,17 +28,19 @@ class StockArticles extends React.Component {
       }
       this.setState({ articlesToFade })
     }
+    console.log("COMPONENT DID UPDATE", this.state.articlesToFade)
   }
 
   getArticleData = (ticker) => {
     axios.get(`/scrape`, {
       params: { ticker },
-      timeout: 6000
-    }).then(res => {
-      let articleData = res.data;
-      // console.log(articleData);
-      this.setState({ articleData });
+      timeout: 10000
     })
+      .then(res => {
+        let articleData = res.data;
+        // console.log(articleData);
+        this.setState({ articleData });
+      })
       .catch(err => {
         this.setState({ articleData: false });
       })
