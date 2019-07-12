@@ -1,6 +1,8 @@
 # Stockup
 A stock application utilizing APIs and web scraping for gathering stock news and data
 
+https://morning-lowlands-45091.herokuapp.com/
+
 ### News Sources
 - Yahoo Finance
 - MarketWatch
