@@ -29,6 +29,6 @@ A stock application utilizing APIs and web scraping for gathering stock news and
 
 ### Running Locally 
 - navigate to project's *root* folder and run ```npm i```
-- navigate into *client* folder and run ```npm i```
 - in project's *root* folder run ```npm i --s concurrently```
-- start the project with ```yarn dev```
+- navigate into *client* folder and run ```npm i```
+- from the *root* folder, start the project with ```yarn dev```
