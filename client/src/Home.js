@@ -5,6 +5,7 @@ import MarketIndexes from './home/MarketIndex';
 import SearchBar from './home/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { withRouter } from 'react-router-dom';
 import './Home.css';
 
 class Home extends React.Component {
@@ -15,8 +16,9 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (this.props.location.state) {
-      let errMsg = this.props.location.state.errMsg
+      let errMsg = this.props.location.state.errMsg;
       this.setState({ errMsg });
+      this.props.history.replace('', null); // prevents error message from popping up after refreshing page
     }
   }
 
@@ -78,4 +80,4 @@ const StockupLogo = () => {
   );
 }
 
-export default Home;
+export default withRouter(Home);
