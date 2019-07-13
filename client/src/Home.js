@@ -43,7 +43,7 @@ class Home extends React.Component {
         <div className="searchWrapper">
           <Fade bottom distance={'15px'}>
             <StockupLogo />
-            <div className="stockupPhrase">Stock up on all the news for the stocks you follow</div>
+            <div className="stockupPhrase">Stock up on all the news for stocks that you follow</div>
           </Fade>
           <Fade bottom distance={'15px'} delay={210}>
             <SearchBar />
