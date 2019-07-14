@@ -24,13 +24,22 @@ class Home extends React.Component {
 
   // up to FIVE market indexes
   getMarketIndexes() {
-    return [
-      { name: "Dow 30", ticker: "^DJI" },
-      { name: "S&P 500", ticker: "^GSPC" },
-      { name: "Nasdaq", ticker: "^IXIC" },
-      { name: "NYSE", ticker: "^NYA" },
-      { name: "Russell 2000", ticker: "^RUT" }
-    ];
+    // show only 3 market indexes if screen width is less than 700
+    if (window.innerWidth < 700) {
+      return [
+        { name: "Dow 30", ticker: "^DJI" },
+        { name: "S&P 500", ticker: "^GSPC" },
+        { name: "Nasdaq", ticker: "^IXIC" }
+      ];
+    } else {
+      return [
+        { name: "Dow 30", ticker: "^DJI" },
+        { name: "S&P 500", ticker: "^GSPC" },
+        { name: "Nasdaq", ticker: "^IXIC" },
+        { name: "NYSE", ticker: "^NYA" },
+        { name: "Russell 2000", ticker: "^RUT" }
+      ];
+    }
   }
 
   render() {

@@ -54,7 +54,7 @@ class MarketIndexes extends React.Component {
 
 const MarketIndex = props => {
   return (
-    <div className="MarketIndex">
+    <div className={"MarketIndex " + props.name}>
       <div className="indexName">{props.name}</div>
       <div className="indexChange" style={props.percentColor}>{props.percent}%</div>
     </div>

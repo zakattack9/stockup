@@ -56,3 +56,31 @@
 .githubLogo a:hover {
   color: #1BBA35;
 }
+
+@media screen and (max-width: 1024px) {
+  .marketIndexWrapper {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .SearchBar {
+    width: 50%;
+    margin-top: 2.3em;
+  }
+
+  .SearchBar:focus {
+    width: 48%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .marketIndexWrapper {
+    width: 100%;
+  }
+
+  .stockupPhrase {
+    padding: 0 3em;
+    padding-top: 0.5em;
+  }
+}

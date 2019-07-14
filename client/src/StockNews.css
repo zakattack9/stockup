@@ -66,3 +66,42 @@
   opacity: 1;
   top: 2.5em;
 }
+
+@media screen and (max-width: 1024px) {
+  .stockName {
+    padding-left: 30%;
+  }
+
+  .articlesWrapper {
+    padding-right: 30%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .stockName {
+    padding-left: 35%;
+  }
+
+  .articlesWrapper {
+    padding-right: 20%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .StockData {
+    width: 100%;
+    text-align: left;
+  }
+
+  .StockArticles {
+    width: 100%;
+  }
+
+  .stockName {
+    padding-left: 0%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+
+}
