@@ -34,3 +34,8 @@ https://morning-lowlands-45091.herokuapp.com/
 - in project's *root* folder run ```npm i --s concurrently```
 - navigate into *client* folder and run ```npm i```
 - from the *root* folder, start the project with ```yarn dev```
+
+#### TODO
+- dark mode
+- intraday graphs for stocks
+- hide stock data on scroll down (mobile)
