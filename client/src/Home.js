@@ -22,6 +22,19 @@ class Home extends React.Component {
     }
   }
 
+  requestFullscreen() {
+    let elem = document.body;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    }
+  }
+
   // up to FIVE market indexes
   getMarketIndexes() {
     // show only 3 market indexes if screen width is less than 700
@@ -66,6 +79,8 @@ class Home extends React.Component {
               <FontAwesomeIcon icon={faGithub} size="lg" />
             </a>
           </div>
+
+          <button onClick={this.requestFullscreen} className="fullscreenBtn">Enter fullscreen mode</button>
         </Flip>
       </div>
     );

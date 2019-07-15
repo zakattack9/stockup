@@ -42,8 +42,7 @@
 .githubLogo {
   position: absolute;
   bottom: 3vh;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 47.5%;
   color: #343434;
 }
 
@@ -55,6 +54,10 @@
 
 .githubLogo a:hover {
   color: #1BBA35;
+}
+
+.fullscreenBtn {
+  display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -102,6 +105,25 @@
   .errMsg {
     padding-left: 4em;
     padding-right: 4em;
+  }
+
+  .githubLogo {
+    position: absolute;
+    bottom: 6vh;
+    left: 47.5%;
+    color: #343434;
+  }
+
+  .fullscreenBtn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 2vh;
+    color: rgb(180, 180, 180);
+    font-weight: 100;
+    font-style: italic;
   }
 }
 
