@@ -64,9 +64,34 @@
 }
 
 @media screen and (max-width: 425px) {
+  .marketIndexWrapper {
+    width: 100%;
+  }
+
+  .indexName {
+    font-size: 1.3em;
+  }
+  
+  .indexChange {
+    font-size: 0.9em;
+    margin-top: 0.04em;
+  }
+
+  .searchWrapper {
+    top: 35%;
+  }
+
+  .StockupLogo {
+    width: 12em;
+  }
+
+  .stockupPhrase {
+    font-size: 0.85em;
+  }
+
   .SearchBar {
     width: 50%;
-    margin-top: 2.3em;
+    margin-top: 2em;
     padding-left: 1.5em;
   }
 

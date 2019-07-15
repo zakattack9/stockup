@@ -94,14 +94,15 @@
   }
 
   .stockupIcon {
+    width: 1.8em;
     position: absolute;
     left: unset;
-    top: 1.5em;
-    right: 1.5em;
+    top: 0.6em;
+    right: 0.7em;
   }
 
   .StockNews {
-    padding-left: 2em;
+    padding-left: 1em;
     display: flex;
     flex-flow: column;
     height: 100%;
@@ -113,7 +114,7 @@
     position: relative;
     float: none;
     text-align: left;
-    padding: 2em 0;
+    padding: 1em 0 1.5em 0;
     flex: 0 1 auto;
   }
 
@@ -130,7 +131,12 @@
   }
 
   .stockName {
+    font-size: 2em;
     padding-left: 0%;
+  }
+
+  .stockPrice {
+    font-size: 1.5em;
   }
 
   .stockStatsWrapper {
@@ -148,6 +154,12 @@
     display: inline-block;
     margin: 0;
     margin-right: 3em;
+  }
+
+  .TickerBackground {
+    /* display: none; */
+    position: fixed;
+    top: 64.5%;
   }
 
   .StockArticles {
@@ -174,7 +186,4 @@
   .LoadingArticle:first-child {
     margin-top: 1vh;
   }
-}
-
-@media screen and (max-width: 375px) {
 }
