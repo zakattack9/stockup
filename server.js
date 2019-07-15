@@ -1,26 +1,52 @@
 const express = require('express');
+const path = require('path');
 const request = require('request');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Serve static files from the React app in Heroku
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 app.get('/scrape', function (req, res) {
   console.log("hello world", req.query.ticker);
+  // TODO: add functionality to handle searches for market indexes, ex. ^DJI, ^GSPC
 
   let stockSymbol = req.query.ticker;
   let urls = [
     { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
     { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },
-    { id: 3, url: `https://finance.yahoo.com/quote/${stockSymbol}` },
-    { id: 4, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
-    { id: 5, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
-    { id: 6, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
+    // { id: 3, url: `https://finance.yahoo.com/quote/${stockSymbol}` },
+    // { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
+    // { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
+    { id: 6, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
+    // { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
   ];
 
+  // cloudscraper.get(urls[1].url)
+  //   .then(html => {
+  //     let $ = cheerio.load(html);
+  //     let articles = [];
+  //     let articleCount = 0;
+
+  //     // scrapes 10 latest articles from The Motley Fool's "News & Analysis" section
+  //     $('.list-content article .text').each((index, val) => {
+  //       if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+  //       let articleObj = {};
+  //       articleObj.title = $(val).find('h4').text();
+  //       articleObj.link = 'https://www.fool.com/' + $(val).find('h4').children().attr('href');
+  //       articleObj.date = $(val).find('.story-date-author').text().split("|")[1].trim();
+  //       articles.push(articleObj);
+  //       articleCount++;
+  //     })
+
+  //     console.log(articles);
+  //   })
+
+
   let allArticles = [];
-  urls.forEach(url => { // asynchronously scrapes articles from urls
-    // utilizes promises to push results to one array
+  urls.forEach(url => {
     allArticles.push(stockScraper(url.id, url.url));
   });
 
@@ -34,13 +60,14 @@ app.get('/scrape', function (req, res) {
               let articles = [];
               let articleCount = 0;
 
-              // scrapes 10 latest articles from MarketWatch's "Recent News" section
+              // scrapes 15 latest articles from MarketWatch's "Recent News" section
               $('.collection__list .element--article .article__content').each((index, val) => {
-                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                if (articleCount === 15) { return false } // stops pulling article data after 10 have been accumalated
                 let articleObj = {};
-                articleObj.title = $(val).children().first().children().text();
+                articleObj.title = $(val).children().first().children().text().trim();
                 articleObj.link = $(val).find('.article__headline').children().first().attr('href');
                 articleObj.date = $(val).find('.article__details').find('.article__timestamp').text();
+                articleObj.site = "MarketWatch";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -59,9 +86,10 @@ app.get('/scrape', function (req, res) {
               $('.list-content article .text').each((index, val) => {
                 if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
                 let articleObj = {};
-                articleObj.title = $(val).find('h4').text();
-                articleObj.link = 'https://www.fool.com/' + $(val).find('h4').children().attr('href');
+                articleObj.title = $(val).find('h4').text().trim();
+                articleObj.link = 'https://www.fool.com' + $(val).find('h4').children().attr('href');
                 articleObj.date = $(val).find('.story-date-author').text().split("|")[1].trim();
+                articleObj.site = "Motley Fool";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -70,12 +98,51 @@ app.get('/scrape', function (req, res) {
             })
           break;
         case 3: // Yahoo Finance
-
           break;
-        case 4: // TheStreet
+        case 4: // InvestorPlace
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
 
+              // scrapes 10 latest articles from InvestorPlace "News" section
+              $('.subcat-post-row .subcat-post').each((index, val) => {
+                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                let articleObj = {};
+                articleObj.title = $(val).find('h2').text().trim();
+                articleObj.link = $(val).find('h2').children().attr('href');
+                articleObj.date = $(val).find('.entry-meta-date').text().trim();
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(articles);
+            })
           break;
-        case 5: // Seeking Alpha
+        case 5: // TheStreet
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
+
+              // scrapes 5 latest articles from TheStreet's "News" section
+              $('.news-list-compact__block.newshasImg').each((index, val) => {
+                if (articleCount === 5) { return false } // stops pulling article data after 10 have been accumalated
+                let articleObj = {};
+                articleObj.title = $(val).find('.news-list-compact__headline').text().trim();
+                articleObj.date = $(val).find('.news-list__publish-date').text().trim();
+                let articleLink = $(val).find('.news-list-compact__headline').parent().attr('href');
+                articleObj.link = articleLink.includes('https://') ? articleLink : 'https://realmoney.thestreet.com' + articleLink;
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(articles);
+            })
+          break;
+        case 6: // Seeking Alpha
           cloudscraper.get(url)
             .then(html => {
               // console.log(html)
@@ -85,26 +152,27 @@ app.get('/scrape', function (req, res) {
               // scrapes articles from Seeking Alpha's "Analysis" section
               $('.content_block_investment_views ul .symbol_item .content .symbol_article').each((index, val) => {
                 let articleObj = {};
-                articleObj.title = $(val).children().first().text();
+                articleObj.title = $(val).children().first().text().trim();
                 articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().attr('href');
                 articleObj.date = $(val).children().last().text().split("•")[1];
+                articleObj.site = "Seeking Alpha";
                 articles.push(articleObj);
               })
 
               // scrapes articles from Seeking Alpha's "News" section
               $('.symbol_latest_articles #symbol-page-latest .symbol_item .content').each((index, val) => {
                 let articleObj = {};
-                articleObj.title = $(val).children().first().children().text();
+                articleObj.title = $(val).children().first().children().text().trim();
                 articleObj.link = 'https://seekingalpha.com/' + $(val).children().first().children().attr('href');
                 articleObj.date = $(val).children().last().text().split("•")[1];
+                articleObj.site = "Seeking Alpha";
                 articles.push(articleObj);
               })
               // console.log(articles);
               resolve(articles);
             })
           break;
-        case 6: // Bloomberg
-
+        case 7: // Bloomberg
           break;
         default:
           reject('Something went wrong with the scraper, or the URL is not included in the scraper');
@@ -112,13 +180,39 @@ app.get('/scrape', function (req, res) {
     });
   };
 
-  Promise.all(allArticles).then(articles => { // executes after all asynchronous scraping has finished
-    // return data to front-end
-    console.log(articles);
-    res.send(articles);
+  // shuffles articles in array
+  // https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // return data to front-end
+  Promise.all(allArticles).then(articles => {
+    let allArticles = [];
+    // filter out articles without a title
+    articles.map(articlesArr => {
+      articlesArr.map(article => {
+        if (article.title !== '') {
+          allArticles.push(article)
+        }
+      })
+    });
+
+    res.send(shuffle(allArticles));
+    console.log(allArticles);
   })
 
 })
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 module.exports = app;

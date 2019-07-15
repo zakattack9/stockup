@@ -12,6 +12,8 @@ https://morning-lowlands-45091.herokuapp.com/
 - CNBC
 - Motley Fool
 - Barron's
+- InvestorPlace
+- Investopedia
 
 ### APIs
 - https://www.worldtradingdata.com/documentation
