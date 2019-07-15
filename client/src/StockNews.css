@@ -159,7 +159,12 @@
   .TickerBackground {
     /* display: none; */
     position: fixed;
-    top: 64.5%;
+    top: 83.5%;
+  }
+
+  .tickerSymbol {
+    top: 0;
+    left: -8vw;
   }
 
   .StockArticles {

@@ -9,8 +9,10 @@
 }
 
 .tickerSymbol {
-  font-family: Helvetica-BoldOblique;
+  /* font-family: Helvetica-BoldOblique; */
   font-size: 40vw;
+  font-weight: bold;
+  font-style: italic;
   color: #F3F3F3;
   position: relative;
   top: 18.5vh;
