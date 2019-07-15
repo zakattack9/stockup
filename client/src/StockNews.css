@@ -73,35 +73,108 @@
   }
 
   .articlesWrapper {
-    padding-right: 30%;
+    padding-right: 25%;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
   .stockName {
-    padding-left: 35%;
+    padding-left: 20%;
   }
 
   .articlesWrapper {
-    padding-right: 20%;
+    padding-right: 15%;
   }
 }
 
-@media screen and (max-width: 550px) {
-  .StockData {
-    width: 100%;
-    text-align: left;
+/* Mobile view breakpoint */
+@media screen and (max-width: 750px) {
+  .addIconWrapper {
+    display: none;
   }
 
-  .StockArticles {
+  .stockupIcon {
+    position: absolute;
+    left: unset;
+    top: 1.5em;
+    right: 1.5em;
+  }
+
+  .StockNews {
+    padding-left: 2em;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+
+  .StockData {
     width: 100%;
+    height: auto;
+    position: relative;
+    float: none;
+    text-align: left;
+    padding: 2em 0;
+    flex: 0 1 auto;
+  }
+
+  .verticallyCenter {
+    width: 100%;
+    position: relative;
+    top: 0;
+    transform: translateY(0%);
+  }
+
+  .stockWrapper {
+    margin: 0;
+    margin-bottom: 1.5em;
   }
 
   .stockName {
     padding-left: 0%;
   }
+
+  .stockStatsWrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stockStatsWrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .statWrapper {
+    display: inline-block;
+    margin: 0;
+    margin-right: 3em;
+  }
+
+  .StockArticles {
+    width: 100%;
+    flex: 1 1 auto;
+    position: relative;
+    float: none;
+    overflow: auto;
+  }
+
+  .articlesWrapper {
+    width: 100%;
+    padding: 0;
+    padding-right: 2em;
+    position: relative;
+    overflow: unset;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .Article:first-child {
+    margin-top: 1vh;
+  }
+
+  .LoadingArticle:first-child {
+    margin-top: 1vh;
+  }
 }
 
 @media screen and (max-width: 375px) {
-
 }

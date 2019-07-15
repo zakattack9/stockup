@@ -96,7 +96,7 @@ class StockData extends React.Component {
           </div>
         </div>
 
-        <TickerBackground ticker={this.props.ticker} />
+        {/* <TickerBackground ticker={this.props.ticker} /> */}
       </div>
     );
   }
