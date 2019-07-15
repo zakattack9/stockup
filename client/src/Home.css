@@ -31,10 +31,10 @@
 }
 
 .errMsg {
-  font-size: 0.9em; 
+  font-size: 0.9em;
   font-weight: 100;
   font-style: italic;
-  color: #FF6565;
+  color: #ff6565;
   padding-top: 1em;
   text-align: center;
 }
@@ -53,7 +53,7 @@
 }
 
 .githubLogo a:hover {
-  color: #1BBA35;
+  color: #1bba35;
 }
 
 .fullscreenBtn {
@@ -74,7 +74,7 @@
   .indexName {
     font-size: 1.3em;
   }
-  
+
   .indexChange {
     font-size: 0.9em;
     margin-top: 0.04em;
@@ -114,7 +114,16 @@
     color: #343434;
   }
 
+  *:fullscreen,
+  *:-webkit-full-screen,
+  *:-moz-full-screen {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
   .fullscreenBtn {
+    font-size: 0.7em;
+    font-weight: 100;
+    font-style: italic;
     display: block;
     width: 100%;
     text-align: center;
@@ -122,8 +131,6 @@
     position: absolute;
     bottom: 2vh;
     color: rgb(180, 180, 180);
-    font-weight: 100;
-    font-style: italic;
   }
 }
 

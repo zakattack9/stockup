@@ -23,7 +23,7 @@ class Home extends React.Component {
   }
 
   requestFullscreen() {
-    let elem = document.body;
+    let elem = document.documentElement;
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.msRequestFullscreen) {
@@ -80,7 +80,7 @@ class Home extends React.Component {
             </a>
           </div>
 
-          <button onClick={this.requestFullscreen} className="fullscreenBtn">Enter fullscreen mode</button>
+          <div onClick={this.requestFullscreen} className="fullscreenBtn">Enter fullscreen mode</div>
         </Flip>
       </div>
     );
