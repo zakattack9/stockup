@@ -35,7 +35,7 @@ app.get('/scrape', function (req, res) {
     return new Promise((resolve, reject) => {
       let options = {
         uri: url,
-        cloudflareTimeout: 3000
+        cloudflareTimeout: 5500
       };
 
       switch (urlId) { // handles data scraping for different sites
