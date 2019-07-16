@@ -14,31 +14,32 @@ app.get('/scrape', function (req, res) {
   // TODO: add functionality to handle searches for market indexes, ex. ^DJI, ^GSPC
 
   // let stockSymbol = req.query.ticker;
-  let stockSymbol = 'hexo';
+  let stockSymbol = 'nflx';
   let urls = [
     { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
     { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },
-    { id: 3, url: `https://finance.yahoo.com/quote/${stockSymbol}` },
+    { id: 3, url: `https://www.barrons.com/search?keyword=${stockSymbol}&mod=DNH_S` },
     { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
     { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}/details/news.html` }, // 404
     { id: 6, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
     { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
   ];
 
-  cloudscraper.get(urls[4].url)
+  // `https://www.investopedia.com/markets/stocks/${stockSymbol}`
+
+  cloudscraper.get(urls[2].url)
     .then(html => {
       let $ = cheerio.load(html);
       let articles = [];
       let articleCount = 0;
 
       // scrapes 10 latest articles from The Motley Fool's "News & Analysis" section
-      $('.news-list-compact__block.newshasImg').each((index, val) => {
-        if (articleCount === 5) { return false } // stops pulling article data after 10 have been accumalated
+      $('.tab-pane div div ul li').each((index, val) => {
+        if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
         let articleObj = {};
-        articleObj.title = $(val).find('.news-list-compact__headline').text().trim();
-        let articleLink = $(val).find('.news-list-compact__headline').parent().attr('href');
-        articleObj.link = articleLink.includes('https://') ? articleLink : 'https://realmoney.thestreet.com' + articleLink;
-        articleObj.date = $(val).find('.news-list__publish-date').text().trim();
+        articleObj.title = $(val).find('.headline').text().trim();
+        articleObj.link = $(val).find('a').attr('href');
+        articleObj.date = $(val).find('.date').text().trim();
         articles.push(articleObj);
         articleCount++;
       })

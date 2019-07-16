@@ -17,33 +17,12 @@ app.get('/scrape', function (req, res) {
   let urls = [
     { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
     { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },
-    // { id: 3, url: `https://finance.yahoo.com/quote/${stockSymbol}` },
-    // { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
-    // { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
+    { id: 3, url: `https://www.barrons.com/search?keyword=${stockSymbol}&mod=DNH_S` },
+    { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
+    { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
     { id: 6, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
     // { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
   ];
-
-  // cloudscraper.get(urls[1].url)
-  //   .then(html => {
-  //     let $ = cheerio.load(html);
-  //     let articles = [];
-  //     let articleCount = 0;
-
-  //     // scrapes 10 latest articles from The Motley Fool's "News & Analysis" section
-  //     $('.list-content article .text').each((index, val) => {
-  //       if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
-  //       let articleObj = {};
-  //       articleObj.title = $(val).find('h4').text();
-  //       articleObj.link = 'https://www.fool.com/' + $(val).find('h4').children().attr('href');
-  //       articleObj.date = $(val).find('.story-date-author').text().split("|")[1].trim();
-  //       articles.push(articleObj);
-  //       articleCount++;
-  //     })
-
-  //     console.log(articles);
-  //   })
-
 
   let allArticles = [];
   urls.forEach(url => {
@@ -97,7 +76,26 @@ app.get('/scrape', function (req, res) {
               resolve(articles);
             })
           break;
-        case 3: // Yahoo Finance
+        case 3: // Barron's
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
+
+              // scrapes 10 latest articles from Barron's "Search Results" section
+              $('.tab-pane div div ul li').each((index, val) => {
+                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                let articleObj = {};
+                articleObj.title = $(val).find('.headline').text().trim();
+                articleObj.link = $(val).find('a').attr('href');
+                articleObj.date = $(val).find('.date').text().trim();
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(articles);
+            })
           break;
         case 4: // InvestorPlace
           cloudscraper.get(url)
