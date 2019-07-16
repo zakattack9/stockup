@@ -33,9 +33,14 @@ app.get('/scrape', function (req, res) {
 
   function stockScraper(urlId, url) {
     return new Promise((resolve, reject) => {
+      let options = {
+        uri: url,
+        cloudflareTimeout: 4000
+      };
+
       switch (urlId) { // handles data scraping for different sites
         case 1: // MarketWatch
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -55,9 +60,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 2: // Motley Fool
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -77,9 +85,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 3: // Barron's
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -99,9 +110,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 4: // InvestorPlace
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -121,9 +135,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 5: // TheStreet
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -144,9 +161,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 6: // Seeking Alpha
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -173,9 +193,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 7: // Bloomberg
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -195,9 +218,12 @@ app.get('/scrape', function (req, res) {
 
               resolve(articles);
             })
+            .catch(err => {
+              console.log(err);
+            })
           break;
         case 8: // Zacks
-          cloudscraper.get(url)
+          cloudscraper.get(options)
             .then(html => {
               let $ = cheerio.load(html);
               let articles = [];
@@ -217,6 +243,9 @@ app.get('/scrape', function (req, res) {
               })
 
               resolve(articles);
+            })
+            .catch(err => {
+              console.log(err);
             })
           break;
         default:
@@ -248,7 +277,7 @@ app.get('/scrape', function (req, res) {
     });
 
     res.send(shuffle(allArticles));
-    console.log(allArticles);
+    // console.log(allArticles);
   })
 
 })
