@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && npm start",
-    "server": "nodemon testServer.js",
+    "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node testServer.js",
+    "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {

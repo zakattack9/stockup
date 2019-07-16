@@ -14,6 +14,7 @@ app.get('/scrape', function (req, res) {
   // TODO: add functionality to handle searches for market indexes, ex. ^DJI, ^GSPC
 
   let stockSymbol = req.query.ticker;
+  let currentYear = new Date().getFullYear();
   let urls = [
     { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
     { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },
@@ -21,7 +22,8 @@ app.get('/scrape', function (req, res) {
     { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
     { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
     { id: 6, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
-    // { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
+    { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` }, // captcha
+    { id: 8, url: `https://www.zacks.com/stock/quote/${stockSymbol}` }
   ];
 
   let allArticles = [];
@@ -45,7 +47,7 @@ app.get('/scrape', function (req, res) {
                 let articleObj = {};
                 articleObj.title = $(val).children().first().children().text().trim();
                 articleObj.link = $(val).find('.article__headline').children().first().attr('href');
-                articleObj.date = $(val).find('.article__details').find('.article__timestamp').text();
+                articleObj.date = $(val).find('.article__details').find('.article__timestamp').text().split('at')[0].trim();
                 articleObj.site = "MarketWatch";
                 articles.push(articleObj);
                 articleCount++;
@@ -63,7 +65,7 @@ app.get('/scrape', function (req, res) {
 
               // scrapes 10 latest articles from The Motley Fool's "News & Analysis" section
               $('.list-content article .text').each((index, val) => {
-                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                if (articleCount === 10) { return false }
                 let articleObj = {};
                 articleObj.title = $(val).find('h4').text().trim();
                 articleObj.link = 'https://www.fool.com' + $(val).find('h4').children().attr('href');
@@ -85,11 +87,12 @@ app.get('/scrape', function (req, res) {
 
               // scrapes 10 latest articles from Barron's "Search Results" section
               $('.tab-pane div div ul li').each((index, val) => {
-                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                if (articleCount === 8) { return false }
                 let articleObj = {};
                 articleObj.title = $(val).find('.headline').text().trim();
                 articleObj.link = $(val).find('a').attr('href');
                 articleObj.date = $(val).find('.date').text().trim();
+                articleObj.site = "Barron's";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -106,11 +109,12 @@ app.get('/scrape', function (req, res) {
 
               // scrapes 10 latest articles from InvestorPlace "News" section
               $('.subcat-post-row .subcat-post').each((index, val) => {
-                if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+                if (articleCount === 10) { return false }
                 let articleObj = {};
                 articleObj.title = $(val).find('h2').text().trim();
                 articleObj.link = $(val).find('h2').children().attr('href');
                 articleObj.date = $(val).find('.entry-meta-date').text().trim();
+                articleObj.site = "InvestorPlace";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -127,12 +131,13 @@ app.get('/scrape', function (req, res) {
 
               // scrapes 5 latest articles from TheStreet's "News" section
               $('.news-list-compact__block.newshasImg').each((index, val) => {
-                if (articleCount === 5) { return false } // stops pulling article data after 10 have been accumalated
+                if (articleCount === 5) { return false }
                 let articleObj = {};
                 articleObj.title = $(val).find('.news-list-compact__headline').text().trim();
-                articleObj.date = $(val).find('.news-list__publish-date').text().trim();
+                articleObj.date = $(val).find('.news-list__publish-date').text().split(currentYear)[0].trim() + ` ${currentYear}`;
                 let articleLink = $(val).find('.news-list-compact__headline').parent().attr('href');
                 articleObj.link = articleLink.includes('https://') ? articleLink : 'https://realmoney.thestreet.com' + articleLink;
+                articleObj.site = "TheStreet";
                 articles.push(articleObj);
                 articleCount++;
               })
@@ -143,7 +148,6 @@ app.get('/scrape', function (req, res) {
         case 6: // Seeking Alpha
           cloudscraper.get(url)
             .then(html => {
-              // console.log(html)
               let $ = cheerio.load(html);
               let articles = [];
 
@@ -166,11 +170,54 @@ app.get('/scrape', function (req, res) {
                 articleObj.site = "Seeking Alpha";
                 articles.push(articleObj);
               })
-              // console.log(articles);
+
               resolve(articles);
             })
           break;
         case 7: // Bloomberg
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
+
+              // scrapes 15 latest articles from Bloomberg's "News" section
+              $('.newsItem__5b5cb00f').each((index, val) => {
+                if (articleCount === 15) { return false }
+                let articleObj = {};
+                articleObj.title = $(val).find('.headline__07dbac92').text().trim();
+                articleObj.link = $(val).find('a').attr('href');
+                articleObj.date = $(val).find('.publishedAt__4009bb4f ').text().trim();
+                articleObj.site = "Bloomberg";
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(articles);
+            })
+          break;
+        case 8: // Zacks
+          cloudscraper.get(url)
+            .then(html => {
+              let $ = cheerio.load(html);
+              let articles = [];
+              let articleCount = 0;
+
+              // scrapes 10 latest articles from Zack's "News" section
+              $('#news-tab-1 article').each((index, val) => {
+                if (articleCount === 10) { return false }
+                let articleObj = {};
+                articleObj.title = $(val).find('a').text().trim();
+                let articleLink = $(val).find('a').attr('href');
+                articleObj.link = articleLink.includes('https://') ? articleLink : 'https://www.zacks.com' + articleLink;
+                articleObj.date = $(val).find('time').text().split('-')[0].trim();
+                articleObj.site = "Zacks";
+                articles.push(articleObj);
+                articleCount++;
+              })
+
+              resolve(articles);
+            })
           break;
         default:
           reject('Something went wrong with the scraper, or the URL is not included in the scraper');
@@ -188,7 +235,7 @@ app.get('/scrape', function (req, res) {
     return a;
   }
 
-  // return data to front-end
+  // return data to front-end once all websites have been scraped
   Promise.all(allArticles).then(articles => {
     let allArticles = [];
     // filter out articles without a title

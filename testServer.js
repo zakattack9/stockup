@@ -14,7 +14,7 @@ app.get('/scrape', function (req, res) {
   // TODO: add functionality to handle searches for market indexes, ex. ^DJI, ^GSPC
 
   // let stockSymbol = req.query.ticker;
-  let stockSymbol = 'nflx';
+  let stockSymbol = 'aapl';
   let urls = [
     { id: 1, url: `https://www.marketwatch.com/investing/stock/${stockSymbol}` },
     { id: 2, url: `https://www.fool.com/quote/${stockSymbol}` },
@@ -22,24 +22,27 @@ app.get('/scrape', function (req, res) {
     { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
     { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}/details/news.html` }, // 404
     { id: 6, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
-    { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` } // captcha
+    { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` }, // captcha
+    { id: 8, url: `https://www.zacks.com/stock/quote/${stockSymbol}` }
   ];
 
   // `https://www.investopedia.com/markets/stocks/${stockSymbol}`
 
-  cloudscraper.get(urls[2].url)
+  cloudscraper.get(urls[7].url)
     .then(html => {
       let $ = cheerio.load(html);
       let articles = [];
       let articleCount = 0;
 
       // scrapes 10 latest articles from The Motley Fool's "News & Analysis" section
-      $('.tab-pane div div ul li').each((index, val) => {
-        if (articleCount === 10) { return false } // stops pulling article data after 10 have been accumalated
+      $('#news-tab-1 article').each((index, val) => {
+        if (articleCount === 15) { return false } // stops pulling article data after 10 have been accumalated
         let articleObj = {};
-        articleObj.title = $(val).find('.headline').text().trim();
-        articleObj.link = $(val).find('a').attr('href');
-        articleObj.date = $(val).find('.date').text().trim();
+        articleObj.title = $(val).find('a').text().trim();
+        let articleLink = $(val).find('a').attr('href');
+        articleObj.link = articleLink.includes('https://') ? articleLink : 'https://www.zacks.com' + articleLink;
+        articleObj.date = $(val).find('time').text().split('-')[0].trim();
+        articleObj.site = "Zacks";
         articles.push(articleObj);
         articleCount++;
       })

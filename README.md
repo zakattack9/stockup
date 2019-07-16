@@ -4,16 +4,18 @@ A stock application utilizing APIs and web scraping for gathering stock news and
 https://morning-lowlands-45091.herokuapp.com/
 
 ### News Sources
-- Yahoo Finance
 - MarketWatch
 - Bloomberg
 - Seeking Alpha
 - TheStreet
-- CNBC
 - Motley Fool
 - Barron's
 - InvestorPlace
-- Investopedia
+- Zacks
+
+- Investopedia*
+- CNBC*
+- Yahoo Finance*
 
 ### APIs
 - https://www.worldtradingdata.com/documentation
