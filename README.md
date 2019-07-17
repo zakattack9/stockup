@@ -33,19 +33,19 @@ A React application leveraging APIs and web scraping for gathering stock news an
  export default API_KEY; 
 ```
 
-### APIs
+#### APIs
 - https://www.worldtradingdata.com/documentation
 - https://www.alphavantage.co/documentation/
 
-### Web Scraping w/Cheerio Tutorials
+#### Web Scraping w/Cheerio Tutorials
 - https://scotch.io/tutorials/scraping-the-web-with-node-js
 - https://buttercms.com/blog/web-scraping-with-nodejs-and-cheerio
 - http://zetcode.com/javascript/cheerio/
 
-### Cloudscraper
+#### Cloudscraper
 - https://github.com/codemanki/cloudscraper
 
-### Puppeteer 
+#### Puppeteer 
 - https://stackoverflow.com/questions/55678095/bypassing-captchas-with-headless-chrome-using-puppeteer
 - https://flaviocopes.com/web-scraping/
 
