@@ -52,6 +52,8 @@ A React application leveraging APIs and web scraping for gathering stock news an
 - https://flaviocopes.com/web-scraping/
 
 #### TODO
+- "Add to Homepage" functionality using cookies
 - dark mode
 - intraday graphs for stocks
 - hide stock data on scroll down (mobile)
+- ability to sort articles by recent date
