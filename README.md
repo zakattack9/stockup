@@ -15,6 +15,7 @@ A React application leveraging APIs and web scraping for gathering stock news an
 - Investopedia*
 - CNBC*
 - Yahoo Finance*
+
 **not added currently*
 
 ### Running Locally 
