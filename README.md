@@ -1,21 +1,21 @@
-# Stockup
-A stock application utilizing APIs and web scraping for gathering stock news and data
+![alt text](./client/src/assets/StockupLogo.png "Stockup")
+A stock application leveraging APIs and web scraping for gathering stock news and data
 
 https://morning-lowlands-45091.herokuapp.com/
 
 ### News Sources
-- MarketWatch
-- Bloomberg
-- Seeking Alpha
-- TheStreet
-- Motley Fool
-- Barron's
-- InvestorPlace
-- Zacks
+\- MarketWatch
+\- Bloomberg
+\- Seeking Alpha
+\- TheStreet
+\- Motley Fool
+\- Barron's
+\- InvestorPlace
+\- Zacks
 
-- Investopedia*
-- CNBC*
-- Yahoo Finance*
+\- Investopedia*
+\- CNBC*
+\- Yahoo Finance*
 
 ### APIs
 - https://www.worldtradingdata.com/documentation
@@ -37,7 +37,18 @@ https://morning-lowlands-45091.herokuapp.com/
 - navigate to project's *root* folder and run ```npm i```
 - in project's *root* folder run ```npm i --s concurrently```
 - navigate into *client* folder and run ```npm i```
+- follow instructions to create ```creds.js``` file before running project
 - from the *root* folder, start the project with ```yarn dev```
+
+### Creating creds.js File
+- from the *root* folder navigate to `client/src/api/`
+- create a `creds.js` file in this directory
+- head to https://www.worldtradingdata.com/ and sign up for an API key
+- after receiving your API key paste the following code into `creds.js`
+```javascript
+ const API_KEY = 'YOUR_API_KEY';	
+ export default API_KEY; 
+```
 
 #### TODO
 - dark mode
