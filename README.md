@@ -1,4 +1,5 @@
-![alt text](./client/src/assets/StockupLogo.png "Stockup")
+<!-- ![alt text](./client/src/assets/StockupLogo.png "Stockup") -->
+<img src="./client/src/assets/StockupLogo.png" width="100">
 A React application leveraging APIs and web scraping for gathering stock news and data
 
 ### News Sources
