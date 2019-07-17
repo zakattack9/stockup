@@ -1,37 +1,19 @@
 ![alt text](./client/src/assets/StockupLogo.png "Stockup")
-A stock application leveraging APIs and web scraping for gathering stock news and data
-
-https://morning-lowlands-45091.herokuapp.com/
+A React application leveraging APIs and web scraping for gathering stock news and data
 
 ### News Sources
-\- MarketWatch
-\- Bloomberg
-\- Seeking Alpha
-\- TheStreet
-\- Motley Fool
-\- Barron's
-\- InvestorPlace
-\- Zacks
+- MarketWatch
+- Bloomberg
+- Seeking Alpha
+- TheStreet
+- Motley Fool
+- Barron's
+- InvestorPlace
+- Zacks
 
-\- Investopedia*
-\- CNBC*
-\- Yahoo Finance*
-
-### APIs
-- https://www.worldtradingdata.com/documentation
-- https://www.alphavantage.co/documentation/
-
-### Web Scraping w/Cheerio Tutorials
-- https://scotch.io/tutorials/scraping-the-web-with-node-js
-- https://buttercms.com/blog/web-scraping-with-nodejs-and-cheerio
-- http://zetcode.com/javascript/cheerio/
-
-### Cloudscraper
-- https://github.com/codemanki/cloudscraper
-
-### Puppeteer 
-- https://stackoverflow.com/questions/55678095/bypassing-captchas-with-headless-chrome-using-puppeteer
-- https://flaviocopes.com/web-scraping/
+- Investopedia*
+- CNBC*
+- Yahoo Finance*
 
 ### Running Locally 
 - navigate to project's *root* folder and run ```npm i```
@@ -49,6 +31,22 @@ https://morning-lowlands-45091.herokuapp.com/
  const API_KEY = 'YOUR_API_KEY';	
  export default API_KEY; 
 ```
+
+### APIs
+- https://www.worldtradingdata.com/documentation
+- https://www.alphavantage.co/documentation/
+
+### Web Scraping w/Cheerio Tutorials
+- https://scotch.io/tutorials/scraping-the-web-with-node-js
+- https://buttercms.com/blog/web-scraping-with-nodejs-and-cheerio
+- http://zetcode.com/javascript/cheerio/
+
+### Cloudscraper
+- https://github.com/codemanki/cloudscraper
+
+### Puppeteer 
+- https://stackoverflow.com/questions/55678095/bypassing-captchas-with-headless-chrome-using-puppeteer
+- https://flaviocopes.com/web-scraping/
 
 #### TODO
 - dark mode
