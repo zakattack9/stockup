@@ -29,7 +29,7 @@ class SearchBar extends React.Component {
       <form onSubmit={this.onFormSubmit} className="form">
         <input
           className="SearchBar"
-          placeholder="Enter a ticker symbol"
+          placeholder="Enter a ticker symbol (ex. AAPL)"
           type="text"
           maxLength="6"
           value={this.state.term}

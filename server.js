@@ -22,7 +22,7 @@ app.get('/scrape', function (req, res) {
     { id: 4, url: `https://investorplace.com/stock-quotes/${stockSymbol}-stock-quote/` },
     { id: 5, url: `https://www.thestreet.com/quote/${stockSymbol}.html` }, // 404
     { id: 6, url: `https://seekingalpha.com/symbol/${stockSymbol}` }, // captcha
-    { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` }, // captcha
+    // { id: 7, url: `https://www.bloomberg.com/quote/${stockSymbol}:US` }, // captcha
     { id: 8, url: `https://www.zacks.com/stock/quote/${stockSymbol}` }
   ];
 
