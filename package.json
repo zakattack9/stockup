@@ -11,13 +11,10 @@
   "dependencies": {
     "axios": "latest",
     "body-parser": "^1.18.3",
-    "captcha-solver": "0.0.6",
     "cheerio": "latest",
     "cloudscraper": "^4.1.2",
     "express": "latest",
     "path": "^0.12.7",
-    "puppeteer": "^1.18.1",
-    "random-useragent": "^0.3.1",
     "request": "^2.88.0"
   },
   "devDependencies": {
