@@ -57,7 +57,8 @@ app.get('/scrape', function (req, res) {
                 articles.push(articleObj);
                 articleCount++;
               })
-
+              
+              console.log('MarketWatch');
               resolve(articles);
             })
             .catch(err => {
@@ -83,6 +84,7 @@ app.get('/scrape', function (req, res) {
                 articleCount++;
               })
 
+              console.log('Motley Fool');
               resolve(articles);
             })
             .catch(err => {
@@ -108,6 +110,7 @@ app.get('/scrape', function (req, res) {
                 articleCount++;
               })
 
+              console.log('Barrons');
               resolve(articles);
             })
             .catch(err => {
@@ -133,6 +136,7 @@ app.get('/scrape', function (req, res) {
                 articleCount++;
               })
 
+              console.log('InvestorPlace');
               resolve(articles);
             })
             .catch(err => {
@@ -159,6 +163,7 @@ app.get('/scrape', function (req, res) {
                 articleCount++;
               })
 
+              console.log('TheStreet');
               resolve(articles);
             })
             .catch(err => {
@@ -191,6 +196,7 @@ app.get('/scrape', function (req, res) {
                 articles.push(articleObj);
               })
 
+              console.log('Seeking Alpha');
               resolve(articles);
             })
             .catch(err => {
@@ -242,6 +248,7 @@ app.get('/scrape', function (req, res) {
                 articleCount++;
               })
 
+              console.log('Zacks');
               resolve(articles);
             })
             .catch(err => {
