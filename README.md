@@ -58,5 +58,4 @@ A React application leveraging APIs and web scraping for gathering stock news an
 - hide stock data on scroll down (mobile)
 - ability to sort articles by recent date
 
-#### Short Link
-https://bit.ly/2XJtcly
+#### Short Link: https://bit.ly/2XJtcly
