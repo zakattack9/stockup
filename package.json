@@ -14,6 +14,7 @@
     "cheerio": "latest",
     "cloudscraper": "^4.1.2",
     "express": "latest",
+    "gh-pages": "^2.1.1",
     "path": "^0.12.7",
     "request": "^2.88.0"
   },
