@@ -1,10 +1,15 @@
 const express = require('express');
 const path = require('path');
-const request = require('request');
+const axios = require('axios');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
 const port = process.env.PORT || 5000;
+
+// calls application every 59 minutes to prevent dyno from sleeping in Heroku
+setInterval(() => {
+  axios.get('http://stockup.zaksakata.com');
+}, 60000 * 59);
 
 // Serve static files from the React app in Heroku
 app.use(express.static(path.join(__dirname, 'client/build')));
