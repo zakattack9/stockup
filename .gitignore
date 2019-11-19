@@ -5,7 +5,7 @@
 /client/node_modules
 /.pnp
 .pnp.js
-# creds.js
+creds.js
 
 # testing
 /coverage
