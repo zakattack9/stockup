@@ -19,6 +19,7 @@ A React application leveraging APIs and web scraping for gathering stock news an
 **not added currently*
 
 ### Running Locally 
+Some news sources are not able to be scraped when this application is run in production, running locally will bypass a lot of these issues when web scraping certain sites.
 - navigate to project's *root* folder and run ```npm i```
 - in project's *root* folder run ```npm i --s concurrently```
 - navigate into *client* folder and run ```npm i```
@@ -26,13 +27,11 @@ A React application leveraging APIs and web scraping for gathering stock news an
 - from the *root* folder, start the project with ```yarn dev```
 
 ### Creating creds.js File
-- from the *root* folder navigate to `client/src/api/`
-- create a `creds.js` file in this directory
+- from the *root* project folder create a `.env` file in this directory
 - head to https://www.worldtradingdata.com/ and sign up for an API key
-- after receiving your API key paste the following code into `creds.js`
-```javascript
- const API_KEY = 'YOUR_API_KEY';	
- export default API_KEY; 
+- after receiving your API key paste the following code into your `.env` file
+```
+API_KEY=worldtradingdata-apikey
 ```
 
 #### APIs
