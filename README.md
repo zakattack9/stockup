@@ -1,10 +1,10 @@
 <!-- ![alt text](./client/src/assets/StockupLogo.png "Stockup") -->
 <img src="./client/src/assets/StockupLogo.png" width="250">
-A React application leveraging APIs and web scraping for gathering stock news and data
+A React application leveraging APIs and web scraping for gathering stock news and data into one place
 
 ### News Sources
 - MarketWatch
-- Bloomberg
+- Bloomberg**
 - Seeking Alpha
 - TheStreet
 - Motley Fool
@@ -16,15 +16,16 @@ A React application leveraging APIs and web scraping for gathering stock news an
 - CNBC*
 - Yahoo Finance*
 
-**not added currently*
+*\*not added currently*
+*\*\*works only when ran locally*
 
 ### Running Locally 
 Some news sources are not able to be scraped when this application is run in production, running locally will bypass a lot of these issues when web scraping certain sites.
 - navigate to project's *root* folder and run ```npm i```
 - in project's *root* folder run ```npm i --s concurrently```
 - navigate into *client* folder and run ```npm i```
-- follow instructions to create ```creds.js``` file before running project
-- from the *root* folder, start the project with ```yarn dev```
+- follow instructions to create ```.env``` file before running project
+- from the *root* folder, start the project with ```yarn dev``` or ```npm run dev```
 
 ### Creating creds.js File
 - from the *root* project folder create a `.env` file in this directory
