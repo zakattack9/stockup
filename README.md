@@ -53,7 +53,6 @@ A React application leveraging APIs and web scraping for gathering stock news an
 
 #### TODO
 - "Add to Homepage" functionality using cookies
-- reconfigure API creds to use env vars
 - dark mode
 - intraday graphs for stocks
 - hide stock data on scroll down (mobile)

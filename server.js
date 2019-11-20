@@ -18,10 +18,10 @@ setInterval(() => {
   }
 }, 60000 * 15);
 
-// switches api keys every 10 hours
+// switches api keys every 9 hours
 setInterval(() => {
   API_KEY = process.env.API_KEY2;
-}, 60000 * 60 * 10);
+}, 60000 * 60 * 9);
 
 // Serve static files from the React app in Heroku
 app.use(express.static(path.join(__dirname, 'client/build')));
