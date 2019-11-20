@@ -8,9 +8,14 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 let API_KEY = process.env.API_KEY; // api key for stock market api calls
 
+console.log(new Date().getHours())
+
 // calls application every 59 minutes to prevent dyno from sleeping in Heroku
 setInterval(() => {
-  axios.get('http://stockup.zaksakata.com');
+  let currentHour = new Date().getHours();
+  if (currentHour < 22 && currentHour > 3) { // lets Heroku dyno run from 3am to 10pm
+    axios.get('http://stockup.zaksakata.com');
+  }
 }, 60000 * 15);
 
 // switches api keys every 10 hours
