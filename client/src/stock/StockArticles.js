@@ -28,7 +28,7 @@ class StockArticles extends React.Component {
       }
       this.setState({ articlesToFade })
     }
-    console.log("COMPONENT DID UPDATE", this.state.articlesToFade)
+    // console.log("COMPONENT DID UPDATE", this.state.articlesToFade)
   }
 
   getArticleData = (ticker) => {

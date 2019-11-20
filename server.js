@@ -4,12 +4,19 @@ const axios = require('axios');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
 const app = express();
+require('dotenv').config();
 const port = process.env.PORT || 5000;
+let API_KEY = process.env.API_KEY; // api key for stock market api calls
 
 // calls application every 59 minutes to prevent dyno from sleeping in Heroku
 setInterval(() => {
   axios.get('http://stockup.zaksakata.com');
-}, 60000 * 59);
+}, 60000 * 15);
+
+// switches api keys every 10 hours
+setInterval(() => {
+  API_KEY = process.env.API_KEY2;
+}, 60000 * 60 * 10);
 
 // Serve static files from the React app in Heroku
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -292,6 +299,40 @@ app.get('/scrape', function (req, res) {
     // console.log(allArticles);
   })
 
+})
+
+app.get('/stockData', async function(req, res) {
+  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
+    params: {
+      api_token: API_KEY,
+      symbol: req.query.symbol
+    }
+  });
+
+  if (response.data.Message) {
+    if (response.data.Message.toLowerCase().includes("error")) {
+      return false;
+    }
+  }
+
+  res.send(response.data.data[0]);
+})
+
+app.get('/marketIndexes', async function(req, res) {
+  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
+    params: {
+      api_token: API_KEY,
+      symbol: req.query.indexes
+    }
+  })
+
+  if (response.data.Message) {
+    if (response.data.Message.toLowerCase().includes("error")) {
+      return false;
+    }
+  }
+
+  res.send(response.data.data);
 })
 
 // The "catchall" handler: for any request that doesn't

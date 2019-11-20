@@ -6,6 +6,7 @@
 /.pnp
 .pnp.js
 creds.js
+.env
 
 # testing
 /coverage

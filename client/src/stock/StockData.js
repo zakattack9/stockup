@@ -32,7 +32,6 @@ class StockData extends React.Component {
       stockData.market_cap = "Unavailable";
       stockData.volume_avg = "Unavailable";
     }
-    console.log(stockData);
     this.setState({ stockData });
   }
 

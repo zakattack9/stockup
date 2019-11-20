@@ -1,6 +1,28 @@
 import axios from 'axios';
-import API_KEY from './creds.js';
-import { stockGrouper, stocks } from './data.js';
+import { stockGrouper, stocks } from './data.js'; // for testing saved stocks on homepage
+// import API_KEY from './creds.js';
+
+// calls node server to return data for a single stock
+export async function searchStock(ticker) {
+  let response = await axios.get('/stockData', {
+    params: {
+      symbol: ticker
+    }
+  });
+
+  return response.data;
+}
+
+// returns data for up to five stocks (used for homepage index tickers);
+export async function searchFiveStocks(stocksArr) {
+  let response = await axios.get('/marketIndexes', {
+    params: {
+      indexes: stocksArr.toString()
+    }
+  })
+  
+  return response.data;
+}
 
 // returns data for any number of stocks
 export function getBatchStockData() {
@@ -13,7 +35,7 @@ export function getBatchStockData() {
     allRequests.push(
       axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
         params: {
-          api_token: API_KEY,
+          // api_token: API_KEY,
           symbol: stocks.toString().replace(" ", ",")
         }
       })
@@ -30,35 +52,3 @@ export function getBatchStockData() {
   return stockData;
 }
 // getBatchStockData();
-
-
-
-// returns data for a single stock
-export async function searchStock(ticker) {
-  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
-    params: {
-      api_token: API_KEY,
-      symbol: ticker
-    }
-  })
-
-  if (response.data.Message) {
-    if (response.data.Message.toLowerCase().includes("error")) {
-      return false;
-    }
-  }
-
-  return response.data.data[0];
-}
-
-// returns data for up to five stocks
-export async function searchFiveStocks(stocksArr) {
-  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
-    params: {
-      api_token: API_KEY,
-      symbol: stocksArr.toString()
-    }
-  })
-  
-  return response.data.data;
-}

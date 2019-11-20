@@ -13,6 +13,7 @@
     "body-parser": "^1.18.3",
     "cheerio": "latest",
     "cloudscraper": "^4.1.2",
+    "dotenv": "^8.2.0",
     "express": "latest",
     "path": "^0.12.7",
     "request": "^2.88.0"
