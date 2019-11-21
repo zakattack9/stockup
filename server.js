@@ -8,7 +8,7 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 let API_KEY = process.env.API_KEY; // api key for stock market api calls
 
-// calls application every 10 minutes to prevent dyno from sleeping in Heroku
+// calls application every 25 minutes to prevent dyno from sleeping in Heroku
 (function() {
   setInterval(() => {
     let currentHour = new Date().getHours();
@@ -16,7 +16,7 @@ let API_KEY = process.env.API_KEY; // api key for stock market api calls
       axios.get('http://stockup.zaksakata.com');
       console.log("CALLED APP");
     }
-  }, (60000 * 10));
+  }, (60000 * 25));
 })();
 
 (function() {
