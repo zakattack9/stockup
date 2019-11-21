@@ -10,13 +10,13 @@ let API_KEY = process.env.API_KEY; // api key for stock market api calls
 
 console.log(new Date().getHours())
 
-// calls application every 59 minutes to prevent dyno from sleeping in Heroku
+// calls application every 10 minutes to prevent dyno from sleeping in Heroku
 setInterval(() => {
   let currentHour = new Date().getHours();
-  if (currentHour < 22 && currentHour > 3) { // lets Heroku dyno run from 3am to 10pm
+  if (currentHour <= 21 && currentHour >= 4) { // lets Heroku dyno run from 4am to 9pm
     axios.get('http://stockup.zaksakata.com');
   }
-}, 60000 * 15);
+}, 60000 * 10);
 
 // switches api keys every 9 hours
 setInterval(() => {

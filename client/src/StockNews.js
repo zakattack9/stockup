@@ -79,7 +79,9 @@ class StockNews extends React.Component {
                  alt="Add Icon" 
                  className={this.determineStockAdded() ? "addIcon added" : "addIcon"}
                  onClick={this.addToHomepage} />
-            <div className={this.determineStockAdded() ? "addIconText added" : "addIconText"}>{this.determineStockAdded() ? "Remove from Home" : "Add to Homepage"}</div>
+            <div className={this.determineStockAdded() ? "addIconText added" : "addIconText"}>
+              {this.determineStockAdded() ? "Remove from Home" : "Add to Homepage"}
+            </div>
           </div>
         </Fade>
       </div>
