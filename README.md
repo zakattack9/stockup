@@ -57,6 +57,7 @@ API_KEY=worldtradingdata-apikey
 - intraday graphs for stocks
 - hide stock data on scroll down (mobile)
 - ability to sort articles by recent date
+- add autoload new articles upon reaching end of article list
 
 *use ```git push heroku master```
 
