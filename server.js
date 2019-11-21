@@ -8,20 +8,29 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 let API_KEY = process.env.API_KEY; // api key for stock market api calls
 
-console.log(new Date().getHours())
-
 // calls application every 10 minutes to prevent dyno from sleeping in Heroku
-setInterval(() => {
-  let currentHour = new Date().getHours();
-  if (currentHour <= 21 && currentHour >= 4) { // lets Heroku dyno run from 4am to 9pm
-    axios.get('http://stockup.zaksakata.com');
-  }
-}, 60000 * 10);
+(function() {
+  setInterval(() => {
+    let currentHour = new Date().getHours();
+    if (currentHour <= 21 && currentHour >= 4) { // lets Heroku dyno run from 4am to 9pm
+      axios.get('http://stockup.zaksakata.com');
+    }
+  }, (60000 * 10));
+})();
 
-// switches api keys every 9 hours
-setInterval(() => {
-  API_KEY = process.env.API_KEY2;
-}, 60000 * 60 * 9);
+(function() {
+  // switches api keys every 9 hours
+  let switched = false;
+  setInterval(() => {
+    if(!switched) {
+      API_KEY = process.env.API_KEY2;
+      switched = true;
+    } else {
+      API_KEY = process.env.API_KEY1;
+      switched = false;
+    }
+  }, (60000 * 60 * 9));
+})();
 
 // Serve static files from the React app in Heroku
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -74,7 +83,7 @@ app.get('/scrape', function (req, res) {
                 articles.push(articleObj);
                 articleCount++;
               })
-              
+
               console.log('MarketWatch');
               resolve(articles);
             })
@@ -306,7 +315,7 @@ app.get('/scrape', function (req, res) {
 
 })
 
-app.get('/stockData', async function(req, res) {
+app.get('/stockData', async function (req, res) {
   let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
     params: {
       api_token: API_KEY,
@@ -323,7 +332,7 @@ app.get('/stockData', async function(req, res) {
   res.send(response.data.data[0]);
 })
 
-app.get('/marketIndexes', async function(req, res) {
+app.get('/marketIndexes', async function (req, res) {
   let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
     params: {
       api_token: API_KEY,
@@ -338,6 +347,43 @@ app.get('/marketIndexes', async function(req, res) {
   }
 
   res.send(response.data.data);
+})
+
+app.get('/stockBatch', async function (req, res) {
+  // groups stocks by five for API request since free tier only allows up to five at a time
+  let stockGrouper = (stocks) => {
+    let groupedStocks = [];
+    let numGroups = Math.ceil(stocks.length / 5);
+    for (let i = 0; i < numGroups; i++) {
+      groupedStocks.push(stocks.splice(0, 5));
+    }
+    return groupedStocks;
+  };
+
+  let groupedStocks = stockGrouper(req.query.stocks);
+  let stockData = [];
+  let allRequests = [];
+
+  groupedStocks.forEach(stocks => {
+    allRequests.push(
+      axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
+        params: {
+          api_token: API_KEY,
+          symbol: stocks.toString().replace(" ", ",")
+        }
+      })
+        .then(res => {
+          stockData.push(...res.data.data);
+        })
+        .catch(err => {
+          return err;
+        })
+    );
+  });
+
+  Promise.all(allRequests).then(done => {
+    res.send(stockData);
+  })
 })
 
 // The "catchall" handler: for any request that doesn't

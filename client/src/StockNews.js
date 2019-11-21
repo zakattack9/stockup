@@ -40,7 +40,7 @@ class StockNews extends React.Component {
     } else {
       this.removeTicker(this.state.ticker);
     }
-    console.log(document.cookie)
+    // console.log(document.cookie)
   }
   
   addTicker = (ticker) => {

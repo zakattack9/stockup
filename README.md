@@ -53,6 +53,7 @@ API_KEY=worldtradingdata-apikey
 
 #### TODO
 - "Add to Homepage" functionality using cookies
+- add error handling for when more than 8 stocks are saved
 - dark mode
 - intraday graphs for stocks
 - hide stock data on scroll down (mobile)

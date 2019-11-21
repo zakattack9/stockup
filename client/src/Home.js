@@ -3,6 +3,7 @@ import Fade from 'react-reveal/Fade';
 import Flip from 'react-reveal/Flip';
 import MarketIndexes from './home/MarketIndex';
 import SearchBar from './home/SearchBar';
+import { getBatchStockData } from './api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { withRouter } from 'react-router-dom';
@@ -15,6 +16,9 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    // gather user saved stocks for homepage
+    this.getHomePageStocks();
+
     if (this.props.location.state) {
       let errMsg = this.props.location.state.errMsg;
       this.setState({ errMsg });
@@ -32,6 +36,15 @@ class Home extends React.Component {
       elem.mozRequestFullScreen();
     } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen();
+    }
+  }
+
+  // retrieve saved stocks from cookies and display their information on the homepage
+  async getHomePageStocks() {
+    if (document.cookie.length !== 0) {
+      let parsedStocks = JSON.parse(document.cookie.split('=')[1]);
+      let stocks = await getBatchStockData(parsedStocks);
+      console.log(stocks);
     }
   }
 
