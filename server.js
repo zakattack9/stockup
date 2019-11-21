@@ -14,6 +14,7 @@ let API_KEY = process.env.API_KEY; // api key for stock market api calls
     let currentHour = new Date().getHours();
     if (currentHour <= 21 && currentHour >= 4) { // lets Heroku dyno run from 4am to 9pm
       axios.get('http://stockup.zaksakata.com');
+      console.log("CALLED APP");
     }
   }, (60000 * 10));
 })();
