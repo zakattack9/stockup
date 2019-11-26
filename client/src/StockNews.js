@@ -65,7 +65,6 @@ class StockNews extends React.Component {
   }
 
   render() {
-    console.log(this.state.addedTicker);
     return (
       <div className="StockNews">
         <StockData ticker={this.state.ticker} />

@@ -42,9 +42,10 @@ class Home extends React.Component {
   // retrieve saved stocks from cookies and display their information on the homepage
   async getHomePageStocks() {
     if (document.cookie.length !== 0) {
-      let parsedStocks = JSON.parse(document.cookie.split('=')[1]);
-      let stocks = await getBatchStockData(parsedStocks);
-      console.log(stocks);
+      console.log(document.cookie);
+      // let parsedStocks = JSON.parse(document.cookie.split('=')[1]);
+      // let stocks = await getBatchStockData(parsedStocks);
+      // console.log(stocks);
     }
   }
 
