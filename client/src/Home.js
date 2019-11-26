@@ -39,13 +39,21 @@ class Home extends React.Component {
     }
   }
 
+  // returns array of saved stocks if it exists in cookies
+  parseCookies = () => {
+    let tickerCookie = document.cookie.split(';').find(cookie => {
+      return cookie.includes('ticker');
+    })
+    // returns false if no ticker cookie has been declared yet
+    return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
+  }
+
   // retrieve saved stocks from cookies and display their information on the homepage
   async getHomePageStocks() {
-    if (document.cookie.length !== 0) {
-      console.log(document.cookie);
-      // let parsedStocks = JSON.parse(document.cookie.split('=')[1]);
-      // let stocks = await getBatchStockData(parsedStocks);
-      // console.log(stocks);
+    if (this.parseCookies()) {
+      let homepageTickers = this.parseCookies();
+      let stocks = await getBatchStockData(homepageTickers);
+      console.log(stocks);
     }
   }
 

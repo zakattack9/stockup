@@ -15,13 +15,18 @@ class StockNews extends React.Component {
     maxTickers: false, // if max amount of tickers were added to homepage
   };
 
+  // returns array of saved stocks if it exists in cookies
   parseCookies = () => {
-    return JSON.parse(document.cookie.split('=')[1]);
+    let tickerCookie = document.cookie.split(';').find(cookie => {
+      return cookie.includes('ticker');
+    })
+    // returns false if no ticker cookie has been declared yet
+    return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
   }
   
   // determines if the stock was already added to the homepage
   determineStockAdded = () => {
-    if (document.cookie.length !== 0) {
+    if (this.parseCookies()) {
       let added = this.parseCookies().find(ticker => {
         return ticker === this.state.ticker;
       })
@@ -32,15 +37,15 @@ class StockNews extends React.Component {
   }
 
   addToHomepage = () => {
-    if (document.cookie.length === 0) {
+    if (!this.parseCookies()) {
       document.cookie = 'ticker=[]';
     }
+    // add or remove cookie
     if (!this.determineStockAdded()) {
       this.addTicker(this.state.ticker);
     } else {
       this.removeTicker(this.state.ticker);
     }
-    // console.log(document.cookie)
   }
   
   addTicker = (ticker) => {
