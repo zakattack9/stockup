@@ -17,6 +17,7 @@ A React application leveraging APIs and web scraping for gathering stock news an
 - Yahoo Finance*
 
 *\*not added currently*
+
 *\*\*works only when ran locally*
 
 ### Running Locally 
@@ -35,6 +36,7 @@ Some news sources are not able to be scraped when this application is run in pro
 API_KEY=worldtradingdata-apikey
 ```
 
+### Additional Resources
 #### APIs
 - https://www.worldtradingdata.com/documentation
 - https://www.alphavantage.co/documentation/
@@ -50,16 +52,3 @@ API_KEY=worldtradingdata-apikey
 #### Puppeteer 
 - https://stackoverflow.com/questions/55678095/bypassing-captchas-with-headless-chrome-using-puppeteer
 - https://flaviocopes.com/web-scraping/
-
-#### TODO
-- "Add to Homepage" functionality using cookies
-- add error handling for when more than 8 stocks are saved
-- dark mode
-- intraday graphs for stocks
-- hide stock data on scroll down (mobile)
-- ability to sort articles by recent date
-- add autoload new articles upon reaching end of article list
-
-*use ```git push heroku master```
-
-
