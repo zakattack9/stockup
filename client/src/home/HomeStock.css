@@ -1,0 +1,51 @@
+.homeStocksWrapper {
+  width: 30em;
+  position: relative;
+  top: 2em;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.HomeStock {
+  text-align: center;
+  margin: 1em 1.5em;
+  transition: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+.HomeStock:hover {
+  transform: scale(0.95);
+}
+
+.homeStockTicker {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: rgb(78, 78, 78);
+}
+
+.homeStockPrice {
+  color: rgb(97, 97, 97);
+}
+
+.homeStockPct {
+  font-size: 0.9em;
+  font-weight: 100;
+}
+
+@media screen and (max-width: 550px) {
+  .homeStocksWrapper {
+    width: 20em;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .homeStocksWrapper {
+    display: none;
+  }
+}

@@ -49,7 +49,7 @@ class StockNews extends React.Component {
   }
   
   addTicker = (ticker) => {
-    let parsedCookie = this.parseCookies(document.cookie);
+    let parsedCookie = this.parseCookies();
     if (parsedCookie.length < 8) {
       parsedCookie.push(ticker);
       document.cookie = `ticker=${JSON.stringify(parsedCookie)}`;
@@ -61,7 +61,7 @@ class StockNews extends React.Component {
   }
 
   removeTicker = (ticker) => {
-    let parsedCookie = this.parseCookies(document.cookie);
+    let parsedCookie = this.parseCookies();
     let removedCookie = parsedCookie.filter(val => {
       return val !== ticker
     })

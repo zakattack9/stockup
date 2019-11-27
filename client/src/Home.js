@@ -2,6 +2,7 @@ import React from 'react';
 import Fade from 'react-reveal/Fade';
 import Flip from 'react-reveal/Flip';
 import MarketIndexes from './home/MarketIndex';
+import HomeStock from './home/HomeStock';
 import SearchBar from './home/SearchBar';
 import { getBatchStockData } from './api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +13,7 @@ import './Home.css';
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { errMsg: '' };
+    this.state = { errMsg: '', homePageStocks: null };
   }
 
   componentDidMount() {
@@ -52,8 +53,9 @@ class Home extends React.Component {
   async getHomePageStocks() {
     if (this.parseCookies()) {
       let homepageTickers = this.parseCookies();
-      let stocks = await getBatchStockData(homepageTickers);
-      console.log(stocks);
+      let homePageStocks = await getBatchStockData(homepageTickers);
+      this.setState({ homePageStocks });
+      console.log(homePageStocks);
     }
   }
 
@@ -77,6 +79,34 @@ class Home extends React.Component {
     }
   }
 
+  getPercentChangeColor = (percent) => {
+    return +percent < 0 ? { color: '#FF6565' } : { color: '#61D474' };
+  }
+
+  getPercentChange = (percent) => { // determines whether to add "+" to positive percent change
+    if (percent === '') { return percent };
+    return +percent > 0 ? `+${percent}%` : `${percent}%`;
+  }
+
+  renderHomePageStocks () {
+    if (this.state.homePageStocks) {
+      return (
+        <div className="homeStocksWrapper">
+          {this.state.homePageStocks.map(stock => {
+            return (
+              <Fade bottom distance={'10px'}>
+                <HomeStock ticker={stock.symbol} 
+                           price={stock.price} 
+                           percentColor={this.getPercentChangeColor(stock.change_pct)} 
+                           percent={this.getPercentChange(stock.change_pct)} />
+              </Fade>
+            )
+          })}
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <div className="Home">
@@ -93,7 +123,9 @@ class Home extends React.Component {
             <SearchBar />
             <div className="errMsg">{this.state.errMsg}</div>
           </Fade>
+          {this.renderHomePageStocks()}
         </div>
+
 
         <Flip bottom delay={450}>
           <div className="githubLogo">
