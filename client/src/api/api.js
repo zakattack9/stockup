@@ -1,3 +1,4 @@
+// handles calls to API from client side
 import axios from 'axios';
 import { stocks } from './data.js'; // for testing saved stocks on homepage
 // import API_KEY from './creds.js';

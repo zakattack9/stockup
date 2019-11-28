@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './HomeStock.css';
 
 const HomeStock = props => {
-  console.log(props)
   return (
     <Link to={{
       pathname: '/stockup',
