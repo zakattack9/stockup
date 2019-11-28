@@ -3,6 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const cloudscraper = require('cloudscraper'); // using cloudscraper over request to bypass captchas
 const cheerio = require('cheerio');
+const stockAPI = require('./utils/api');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT || 5000;
@@ -317,74 +318,30 @@ app.get('/scrape', function (req, res) {
 })
 
 app.get('/stockData', async function (req, res) {
-  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
-    params: {
-      api_token: API_KEY,
-      symbol: req.query.symbol
-    }
-  });
-
-  if (response.data.Message) {
-    if (response.data.Message.toLowerCase().includes("error")) {
-      return false;
-    }
+  try {
+    let stockData = await stockAPI.searchStock(req.query.symbol);
+    res.send(stockData);
+  } catch(e) {
+    throw e.message;
   }
-
-  res.send(response.data.data[0]);
 })
 
 app.get('/marketIndexes', async function (req, res) {
-  let response = await axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
-    params: {
-      api_token: API_KEY,
-      symbol: req.query.indexes
-    }
-  })
-
-  if (response.data.Message) {
-    if (response.data.Message.toLowerCase().includes("error")) {
-      return false;
-    }
+  try {
+    let stockData = await stockAPI.searchFiveStocks(req.query.indexes);
+    res.send(stockData);
+  } catch(e) {
+    throw e.message;
   }
-
-  res.send(response.data.data);
 })
 
 app.get('/stockBatch', async function (req, res) {
-  // groups stocks by five for API request since free tier only allows up to five at a time
-  let stockGrouper = (stocks) => {
-    let groupedStocks = [];
-    let numGroups = Math.ceil(stocks.length / 5);
-    for (let i = 0; i < numGroups; i++) {
-      groupedStocks.push(stocks.splice(0, 5));
-    }
-    return groupedStocks;
-  };
-
-  let groupedStocks = stockGrouper(req.query.stocks);
-  let stockData = [];
-  let allRequests = [];
-
-  groupedStocks.forEach(stocks => {
-    allRequests.push(
-      axios.get(`https://api.worldtradingdata.com/api/v1/stock`, {
-        params: {
-          api_token: API_KEY,
-          symbol: stocks.toString().replace(" ", ",")
-        }
-      })
-        .then(res => {
-          stockData.push(...res.data.data);
-        })
-        .catch(err => {
-          return err;
-        })
-    );
-  });
-
-  Promise.all(allRequests).then(done => {
+  try {
+    let stockData = await stockAPI.getBatchStockData(req.query.stocks);
     res.send(stockData);
-  })
+  } catch(e) {
+    throw e.message;
+  }
 })
 
 // The "catchall" handler: for any request that doesn't

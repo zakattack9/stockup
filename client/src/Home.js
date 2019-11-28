@@ -54,8 +54,8 @@ class Home extends React.Component {
     if (this.parseCookies()) {
       let homepageTickers = this.parseCookies();
       let homePageStocks = await getBatchStockData(homepageTickers);
-      this.setState({ homePageStocks });
       console.log(homePageStocks);
+      this.setState({ homePageStocks });
     }
   }
 
