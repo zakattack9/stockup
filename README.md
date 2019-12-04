@@ -28,7 +28,7 @@ Some news sources are not able to be scraped when this application is run in pro
 - follow instructions to create ```.env``` file before running project
 - from the *root* folder, start the project with ```yarn dev``` or ```npm run dev```
 
-### Creating creds.js File
+### Creating .env File
 - from the *root* project folder create a `.env` file in this directory
 - head to https://www.worldtradingdata.com/ and sign up for an API key
 - after receiving your API key paste the following code into your `.env` file
