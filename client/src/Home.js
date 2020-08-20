@@ -46,8 +46,8 @@ class Home extends React.Component {
     let tickerCookie = document.cookie.split(';').find(cookie => {
       return cookie.includes('ticker');
     })
-    document.cookie = 'ticker=["APPL", "MSFT", "SQ", "CRM", "NYA"]'
-    console.log(tickerCookie)
+    // document.cookie = 'ticker=["AAPL", "MSFT", "SQ", "CRM"]'
+    // console.log(tickerCookie)
     // returns false if no ticker cookie has been declared yet
     return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
   }
@@ -57,7 +57,7 @@ class Home extends React.Component {
     if (this.parseCookies()) {
       let homepageTickers = this.parseCookies();
       let homePageStocks = await getBatchStockData(homepageTickers);
-      console.log(homePageStocks);
+      // console.log(homePageStocks);
       this.setState({ homePageStocks });
     }
   }
@@ -88,7 +88,7 @@ class Home extends React.Component {
         <div className="homeStocksWrapper">
           {this.state.homePageStocks.map((stock, i) => {
             return (
-              <Fade bottom distance={'10px'}>
+              <Fade bottom distance={'10px'} key={`Fade-${i}`}>
                 <HomeStock 
                   ticker={stock.symbol} 
                   price={stock.close} 

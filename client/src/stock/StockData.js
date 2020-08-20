@@ -16,23 +16,27 @@ class StockData extends React.Component {
     this.getStockData(this.props.ticker);
   }
 
+  formatStockData = (stockData) => {
+    let formattedStockData = { ...stockData };
+    // formattedStockData.exchange = stockData.exchange ? stockData.exchange.split(" ")[0] : "";
+    formattedStockData.exchange = stockData.exchange || "";
+    formattedStockData.name = stockData.name ? stockData.name : this.props.ticker;
+    formattedStockData.price = stockData.price ? `$${stockData.price}` : "";
+    formattedStockData.high = stockData.high ? `$${stockData.high}` : "Unavailable";
+    formattedStockData.low = stockData.low ? `$${stockData.low}` : "Unavailable";
+    formattedStockData['52WeekHigh'] = stockData['52WeekHigh'] ? `$${stockData['52WeekHigh']}` : "Unavailable";
+    formattedStockData['52WeekLow'] = stockData['52WeekLow'] ? `$${stockData['52WeekLow']}` : "Unavailable";
+    formattedStockData.marketCap = stockData.marketCap ? formatNumber(stockData.marketCap) : "Unavailable";
+    formattedStockData.avgVolume = stockData.avgVolume ? formatNumber(stockData.avgVolume) : "Unavailable";
+    formattedStockData.percentChange = calcPercentChange(stockData.open, stockData.price);
+    formattedStockData.percentChangeColor = getPercentChangeColor(stockData.open, stockData.price);
+    return formattedStockData;
+  }
+
   getStockData = async (ticker) => {
-    let stockData = await searchStock(ticker);
-    console.log("STOCK DATA", stockData)
-    if (!stockData) {
-      // creates dummy stock data if not found in stock API
-      // this allows the scraper to still run even if the stock isn't included in the API
-      stockData = {};
-      stockData.exchange = "";
-      stockData.name = ticker;
-      stockData.price = "";
-      stockData.high = "Unavailable";
-      stockData.low = "Unavailable";
-      stockData['52_week_high'] = "Unavailable";
-      stockData['52_week_low'] = "Unavailable";
-      stockData.marketCap = "Unavailable";
-      stockData.avgVolume = "Unavailable";
-    }
+    let unformattedStockData = await searchStock(ticker);
+    const stockData = this.formatStockData(unformattedStockData);
+    console.log("STOCK DATA", stockData);
     this.setState({ stockData });
   }
 
@@ -54,9 +58,7 @@ class StockData extends React.Component {
               <div className="marketIndex">{this.state.stockData.exchange}</div>
               <div className="stockName">{this.state.stockData.name}</div>
               <div className="stockPrice">{this.state.stockData.price}</div>
-              <div className="percentChange" style={getPercentChangeColor(this.state.stockData.open, this.state.stockData.price)}>
-                {calcPercentChange(this.state.stockData.open, this.state.stockData.price)}
-              </div>
+              <div className="percentChange" style={this.state.stockData.percentChangeColor}>{this.state.stockData.percentChange}</div>
             </div>
           </Fade>
 
@@ -72,8 +74,8 @@ class StockData extends React.Component {
             <StockStat delay={240} name="Today's Low" data={this.state.stockData.low} />
             <StockStat delay={360} name="52 Wk High" data={this.state.stockData["52WeekHigh"]} />
             <StockStat delay={480} name="52 Wk Low" data={this.state.stockData["52WeekLow"]} />
-            <StockStat delay={600} name="Market Cap" data={formatNumber(this.state.stockData.marketCap)} />
-            <StockStat delay={720} name="Avg Volume" data={formatNumber(this.state.stockData.avgVolume)} />
+            <StockStat delay={600} name="Market Cap" data={this.state.stockData.marketCap} />
+            <StockStat delay={720} name="Avg Volume" data={this.state.stockData.avgVolume} />
           </div>
         </div>
 

@@ -9,7 +9,7 @@ async function searchStock(ticker) {
 
     allRequests.push(
       axios.get(`${BASE_URL}/stock/profile2?symbol=${ticker}`, {
-        params: { 
+        headers: { 
           "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
         }
       })
@@ -26,7 +26,7 @@ async function searchStock(ticker) {
 
     allRequests.push(
       axios.get(`${BASE_URL}/stock/metric?symbol=${ticker}&metric=all`, {
-        params: { 
+        headers: { 
           "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
         }
       })
@@ -42,7 +42,7 @@ async function searchStock(ticker) {
 
     allRequests.push(
       axios.get(`${BASE_URL}/quote?symbol=${ticker}`, {
-        params: { 
+        headers: { 
           "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
         }
       })
