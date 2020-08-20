@@ -6,6 +6,7 @@ async function searchStock(ticker) {
   try {
     let stockData = {};
     let allRequests = [];
+
     allRequests.push(
       axios.get(`${BASE_URL}/stock/profile2?symbol=${ticker}`, {
         params: { 

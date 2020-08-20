@@ -54,8 +54,8 @@ class StockData extends React.Component {
               <div className="marketIndex">{this.state.stockData.exchange}</div>
               <div className="stockName">{this.state.stockData.name}</div>
               <div className="stockPrice">{this.state.stockData.price}</div>
-              <div className="percentChange" style={getPercentChangeColor(this.state.stockData.open, this.state.stockData.close)}>
-                {calcPercentChange(this.state.stockData.open, this.state.stockData.close)}
+              <div className="percentChange" style={getPercentChangeColor(this.state.stockData.open, this.state.stockData.price)}>
+                {calcPercentChange(this.state.stockData.open, this.state.stockData.price)}
               </div>
             </div>
           </Fade>
