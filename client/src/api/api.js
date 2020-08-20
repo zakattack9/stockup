@@ -13,10 +13,10 @@ export async function searchStock(ticker) {
   return response.data;
 }
 
-export async function searchFiveStocks(stocksArr) {
-  let response = await axios.get('/marketIndexes', {
+export async function getExchanges(exchangesArr) {
+  let response = await axios.get('/exchanges', {
     params: {
-      indexes: stocksArr.toString()
+      indexes: exchangesArr.toString()
     }
   })
 

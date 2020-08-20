@@ -1,5 +1,5 @@
 import React from 'react';
-import { searchFiveStocks } from '../api/api';
+import { getExchanges } from '../api/api';
 import Fade from 'react-reveal/Fade';
 import './MarketIndex.css';
 
@@ -10,13 +10,15 @@ class MarketIndexes extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.indexes)
     this.getIndexData(this.props.indexes);
   }
 
   getIndexData = async (indexArr) => {
     let stocksArr = [];
     indexArr.forEach(index => { stocksArr.push(index.ticker); })
-    let indexData = await searchFiveStocks(stocksArr);
+    let indexData = await getExchanges(stocksArr);
+    console.log(indexData)
     this.setState({ indexData });
   }
 

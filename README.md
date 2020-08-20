@@ -36,6 +36,37 @@ Some news sources are not able to be scraped when this application is run in pro
 API_KEY=worldtradingdata-apikey
 ```
 
+### Finnhub.io
+- BASE_URL: `https://finnhub.io/api/v1/`
+- **[Basic Financials](https://finnhub.io/docs/api#company-basic-financials)**
+  - endpoint: `/stock/metric?symbol=${ticker}&metric=all` 
+  - targeted fields: 
+    - 52 Week High
+    - 52 Week Low
+    - 10 Day Average Trading Volume
+- **[Quote](https://finnhub.io/docs/api#quote)**
+  - endpoint: `/quote?symbol=${ticker}`
+  - targeted fields:
+    - Open Price
+    - Close Price
+    - Day High
+    - Day Low
+    - Current Price
+    - Previous Close Price
+- **[Company Profile 2](https://finnhub.io/docs/api#company-profile2)**
+  - endpoint: `/stock/profile2?symbol=${ticker}`
+  - targeted fields:
+    - Company Name
+    - Market Capitalization
+    - Exchange
+    - Logo Image 
+- **[Company News](https://finnhub.io/docs/api#company-news)**
+  - endpoint: `/company-news?symbol=AAPL&from=${yyyy-mm-dd}&to=${yyyy-mm-dd}`
+  - targeted fields:
+    - Source
+    - Headline
+    - URL
+
 ### Additional Resources
 #### APIs
 - https://www.worldtradingdata.com/documentation

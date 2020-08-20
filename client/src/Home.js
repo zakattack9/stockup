@@ -8,6 +8,7 @@ import { getBatchStockData } from './api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { withRouter } from 'react-router-dom';
+import { getPercentChangeColor, calcPercentChange } from './utils/helpers';
 import './Home.css';
 
 class Home extends React.Component {
@@ -45,6 +46,8 @@ class Home extends React.Component {
     let tickerCookie = document.cookie.split(';').find(cookie => {
       return cookie.includes('ticker');
     })
+    document.cookie = 'ticker=["APPL", "MSFT", "SQ", "CRM", "NYA"]'
+    console.log(tickerCookie)
     // returns false if no ticker cookie has been declared yet
     return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
   }
@@ -70,35 +73,29 @@ class Home extends React.Component {
       ];
     } else {
       return [
-        { name: "Dow 30", ticker: "^DJI" },
-        { name: "S&P 500", ticker: "^GSPC" },
-        { name: "Nasdaq", ticker: "^IXIC" },
-        { name: "NYSE", ticker: "^NYA" },
-        { name: "Russell 2000", ticker: "^RUT" }
+        { name: "Dow 30", ticker: ".DJI" },
+        // { name: "S&P 500", ticker: "^GSPC" },
+        // { name: "Nasdaq", ticker: ".IXIC" },
+        // { name: "NYSE", ticker: "^NYA" },
+        // { name: "Russell 2000", ticker: "^RUT" }
       ];
     }
-  }
-
-  getPercentChangeColor = (percent) => {
-    return +percent < 0 ? { color: '#FF6565' } : { color: '#61D474' };
-  }
-
-  getPercentChange = (percent) => { // determines whether to add "+" to positive percent change
-    if (percent === '') { return percent };
-    return +percent > 0 ? `+${percent}%` : `${percent}%`;
   }
 
   renderHomePageStocks () {
     if (this.state.homePageStocks) {
       return (
         <div className="homeStocksWrapper">
-          {this.state.homePageStocks.map(stock => {
+          {this.state.homePageStocks.map((stock, i) => {
             return (
               <Fade bottom distance={'10px'}>
-                <HomeStock ticker={stock.symbol} 
-                           price={stock.price} 
-                           percentColor={this.getPercentChangeColor(stock.change_pct)} 
-                           percent={this.getPercentChange(stock.change_pct)} />
+                <HomeStock 
+                  ticker={stock.symbol} 
+                  price={stock.close} 
+                  percentColor={getPercentChangeColor(stock.open, stock.close)} 
+                  percent={calcPercentChange(stock.open, stock.close)} 
+                  key={i}
+                /> 
               </Fade>
             )
           })}
@@ -111,7 +108,7 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <div className="marketIndexWrapper">
-          <MarketIndexes indexes={this.getMarketIndexes()} />
+          {/* <MarketIndexes indexes={this.getMarketIndexes()} /> */}
         </div>
 
         <div className="searchWrapper">

@@ -7,19 +7,19 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 let API_KEY = process.env.API_KEY; // api key for stock market api calls
 
-(function() {
-  // switches api keys every 2 hours
-  let switched = false;
-  setInterval(() => {
-    if(!switched) {
-      API_KEY = process.env.API_KEY2;
-      switched = true;
-    } else {
-      API_KEY = process.env.API_KEY1;
-      switched = false;
-    }
-  }, (60000 * 60 * 2));
-})();
+// (function() {
+//   // switches api keys every 2 hours (helps with load balancing requests to API)
+//   let switched = false;
+//   setInterval(() => {
+//     if(!switched) {
+//       API_KEY = process.env.API_KEY2;
+//       switched = true;
+//     } else {
+//       API_KEY = process.env.API_KEY1;
+//       switched = false;
+//     }
+//   }, (60000 * 60 * 2));
+// })();
 
 // Serve static files from the React app in Heroku
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -42,9 +42,9 @@ app.get('/stockData', async function (req, res) {
   }
 })
 
-app.get('/marketIndexes', async function (req, res) {
+app.get('/exchanges', async function (req, res) {
   try {
-    let stockData = await stockAPI.searchFiveStocks(req.query.indexes);
+    let stockData = await stockAPI.getExchanges(req.query.indexes);
     res.send(stockData);
   } catch(e) {
     throw e.message;
