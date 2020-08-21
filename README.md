@@ -47,19 +47,13 @@ Below are some of the Finnhub API endpoints that Stockup uses or plans to use in
 
 - **BASE_URL:** `https://finnhub.io/api/v1/`
 - **[Basic Financials](https://finnhub.io/docs/api#company-basic-financials)**
-  - **endpoint:** 
-    ```javascript 
-    `/stock/metric?symbol=${ticker}&metric=all` 
-    ```
+  - **endpoint:** `/stock/metric?symbol={ticker}&metric=all` 
   - **targeted fields:** 
     - 52 Week High
     - 52 Week Low
     - 10 Day Average Trading Volume
 - **[Quote](https://finnhub.io/docs/api#quote)**
-  - **endpoint:** 
-    ```javascript 
-    `/quote?symbol=${ticker}` 
-    ```
+  - **endpoint:** `/quote?symbol={ticker}`
   - **targeted fields:**
     - Open Price
     - Close Price
@@ -68,20 +62,14 @@ Below are some of the Finnhub API endpoints that Stockup uses or plans to use in
     - Current Price
     - Previous Close Price
 - **[Company Profile 2](https://finnhub.io/docs/api#company-profile2)**
-  - **endpoint:** 
-    ```javascript 
-    `/stock/profile2?symbol=${ticker}` 
-    ```
+  - **endpoint:** `/stock/profile2?symbol={ticker}`
   - **targeted fields:**
     - Company Name
     - Market Capitalization
     - Exchange
     - Logo Image 
 - **[Company News](https://finnhub.io/docs/api#company-news)**
-  - **endpoint:** 
-    ```javascript 
-    `/company-news?symbol=${ticker}&from=${yyyy-mm-dd}&to=${yyyy-mm-dd}` 
-    ```
+  - **endpoint:** `/company-news?symbol={ticker}&from={yyyy-mm-dd}&to={yyyy-mm-dd}`
   - **targeted fields:**
     - Source
     - Headline
