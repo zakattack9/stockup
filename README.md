@@ -29,24 +29,33 @@ Some news sources are not able to be scraped when this application is run in pro
 - from the *root* folder, start the project with ```yarn dev``` or ```npm run dev```
 
 ### Creating .env File
-- from the *root* project folder create a `.env` file in this directory
-- head to https://www.worldtradingdata.com/ and sign up for an API key
-- after receiving your API key paste the following code into your `.env` file
+This project uses two APIs to retrieve market data on stocks. *Finnhub* is used to gather stock data for the ETFs displayed on the homepage including all the fields on searched stocks (ex. high, low, market cap, etc.). *marketstack* gathers stock data for all stocks saved to the homepage; this is done because *marketstack* allows for the querying of multiple stock symbols in one API call helping to prevent rate limiting for *Finnhub* which only allows one stock symbol per call.
+
+#### Setup
+- in the *root* project folder create a `.env` file
+- head over to [marketstack](https://www.marketstack.com/) and sign up for a free API key
+- head over to [finnhub](https://finnhub.io/) and sign up for a free API key
+- after receiving both API keys paste the following code into your `.env` file substituting each variable with their respective values
 ```
-API_KEY=worldtradingdata-apikey
+API_KEY=marketstack-api-key
+API_KEY_FINNHUB=finnhub-api-key
 ```
 
+**Note:** this project used to use *worldtradingdata* API to retrieve all stock data, however they were rebranded as *marketstack* API. To migrate over, simply sign up for a *marketstack* API key and swap that out with the old *worldtradingdata* API key.
+
 ### Finnhub.io
-- BASE_URL: `https://finnhub.io/api/v1/`
+Below are some of the Finnhub API endpoints that Stockup uses or plans to use in the future for retrieving stock data. Implementation can be found in `./utils/api.js`
+
+- **BASE_URL:** `https://finnhub.io/api/v1/`
 - **[Basic Financials](https://finnhub.io/docs/api#company-basic-financials)**
-  - endpoint: `/stock/metric?symbol=${ticker}&metric=all` 
-  - targeted fields: 
+  - **endpoint:** `/stock/metric?symbol=${ticker}&metric=all` 
+  - **targeted fields:** 
     - 52 Week High
     - 52 Week Low
     - 10 Day Average Trading Volume
 - **[Quote](https://finnhub.io/docs/api#quote)**
-  - endpoint: `/quote?symbol=${ticker}`
-  - targeted fields:
+  - **endpoint:** `/quote?symbol=${ticker}`
+  - **targeted fields:**
     - Open Price
     - Close Price
     - Day High
@@ -54,22 +63,23 @@ API_KEY=worldtradingdata-apikey
     - Current Price
     - Previous Close Price
 - **[Company Profile 2](https://finnhub.io/docs/api#company-profile2)**
-  - endpoint: `/stock/profile2?symbol=${ticker}`
-  - targeted fields:
+  - **endpoint:** `/stock/profile2?symbol=${ticker}`
+  - **targeted fields:**
     - Company Name
     - Market Capitalization
     - Exchange
     - Logo Image 
 - **[Company News](https://finnhub.io/docs/api#company-news)**
-  - endpoint: `/company-news?symbol=AAPL&from=${yyyy-mm-dd}&to=${yyyy-mm-dd}`
-  - targeted fields:
+  - **endpoint:** `/company-news?symbol=AAPL&from=${yyyy-mm-dd}&to=${yyyy-mm-dd}`
+  - **targeted fields:**
     - Source
     - Headline
     - URL
 
 ### Additional Resources
 #### APIs
-- https://www.worldtradingdata.com/documentation
+- https://marketstack.com/documentation
+- https://finnhub.io/docs/api
 - https://www.alphavantage.co/documentation/
 
 #### Web Scraping w/Cheerio Tutorials
