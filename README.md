@@ -53,7 +53,7 @@ Below are some of the Finnhub API endpoints that Stockup uses or plans to use in
     - 52 Week Low
     - 10 Day Average Trading Volume
 - **[Quote](https://finnhub.io/docs/api#quote)**
-  - **endpoint:** `/quote?symbol=${ticker}`
+  - **endpoint:** ```javascript `/quote?symbol=${ticker}` ```
   - **targeted fields:**
     - Open Price
     - Close Price
