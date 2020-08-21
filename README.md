@@ -3,22 +3,21 @@
 A React application leveraging APIs and web scraping for gathering stock news and data into one place
 
 ### News Sources
-- MarketWatch
-- Bloomberg**
-- Seeking Alpha
-- TheStreet
-- Motley Fool
-- Barron's
-- InvestorPlace
-- Zacks
+Sometimes websites change their HTML layout or have counteractive measures in place to prevent web scraping their sites which will often cause the Stockup scraper to fail in scraping that specific site.
 
-- Investopedia*
-- CNBC*
-- Yahoo Finance*
-
-*\*not added currently*
-
-*\*\*works only when ran locally*
+| Scraped Sites | Status                 |
+| ------------- | ---------------------- |
+| MarketWatch   | working                |
+| Bloomberg     | need to fix            |
+| Seeking Alpha | works sometimes        |
+| InvestorPlace | working                |
+| TheStreet     | need to fix            |
+| Motley Fool   | working                |
+| Barron's      | working                |
+| Zacks         | need to fix            |
+| Investopedia  | not currently added    |
+| CNBC          | not currently added    |
+| Yahoo Finance | not currently added    |
 
 ### Running Locally 
 Some news sources are not able to be scraped when this application is run in production, running locally will bypass a lot of these issues when web scraping certain sites.
