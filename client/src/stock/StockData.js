@@ -34,7 +34,7 @@ class StockData extends React.Component {
   }
 
   getStockData = async (ticker) => {
-    let unformattedStockData = await searchStock(ticker);
+    const unformattedStockData = await searchStock(ticker);
     const stockData = this.formatStockData(unformattedStockData);
     this.setState({ stockData });
   }

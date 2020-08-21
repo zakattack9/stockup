@@ -31,23 +31,3 @@
     opacity: 1;
   }
 }
-
-/* .tickerFront {
-  font-family: Helvetica-BoldOblique;
-  font-size: 40vw;
-  color: #F3F3F3;
-  position: relative;
-  top: 18.5vh;
-  left: -70px;
-  z-index: 1;
-} */
-
-/* .tickerBack {
-  font-family: Helvetica-BoldOblique;
-  font-size: 40vw;
-  color: #EAEAEA;
-  position: absolute;
-  top: 18.5vh;
-  left: -10px;
-  z-index: 0;
-} */

@@ -8,13 +8,13 @@ import { getBatchStockData } from './api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { withRouter } from 'react-router-dom';
-import { getPercentChangeColor, calcPercentChange } from './utils/helpers';
+import { getPercentChangeColor, calcPercentChange, parseCookies } from './utils/helpers';
 import './Home.css';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { errMsg: '', homePageStocks: null };
+    this.state = { errMsg: '', homepageStocks: null };
   }
 
   componentDidMount() {
@@ -41,24 +41,12 @@ class Home extends React.Component {
     }
   }
 
-  // returns array of saved stocks if it exists in cookies
-  parseCookies = () => {
-    let tickerCookie = document.cookie.split(';').find(cookie => {
-      return cookie.includes('ticker');
-    })
-    // document.cookie = 'ticker=["AAPL", "MSFT", "SQ", "CRM"]'
-    // console.log(tickerCookie)
-    // returns false if no ticker cookie has been declared yet
-    return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
-  }
-
   // retrieve saved stocks from cookies and display their information on the homepage
   async getHomePageStocks() {
-    if (this.parseCookies()) {
-      let homepageTickers = this.parseCookies();
-      let homePageStocks = await getBatchStockData(homepageTickers);
-      // console.log(homePageStocks);
-      this.setState({ homePageStocks });
+    if (parseCookies()) {
+      let homepageTickers = parseCookies();
+      let homepageStocks = await getBatchStockData(homepageTickers);
+      this.setState({ homepageStocks });
     }
   }
 
@@ -72,18 +60,14 @@ class Home extends React.Component {
     ];
     
     // show only 3 market indexes if screen width is less than 700
-    if (window.innerWidth < 700) {
-      return etfs.slice(0, 3);
-    } else {
-      return etfs;
-    }
+    return window.innerWidth < 700 ? etfs.slice(0, 3) : etfs;
   }
 
   renderHomePageStocks () {
-    if (this.state.homePageStocks) {
+    if (this.state.homepageStocks) {
       return (
         <div className="homeStocksWrapper">
-          {this.state.homePageStocks.map((stock, i) => {
+          {this.state.homepageStocks.map((stock, i) => {
             return (
               <Fade bottom distance={'10px'} key={`Fade-${i}`}>
                 <HomeStock 

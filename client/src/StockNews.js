@@ -6,6 +6,7 @@ import icon from './assets/icon.png';
 import addIcon from './assets/addIcon.png';
 import checkmarkIcon from './assets/checkmarkIcon.png';
 import { Link } from 'react-router-dom';
+import { parseCookies } from './utils/helpers';
 import './StockNews.css';
 
 class StockNews extends React.Component {
@@ -15,19 +16,10 @@ class StockNews extends React.Component {
     maxTickers: false, // if max amount of tickers were added to homepage
   };
 
-  // returns array of saved stocks if it exists in cookies
-  parseCookies = () => {
-    let tickerCookie = document.cookie.split(';').find(cookie => {
-      return cookie.includes('ticker');
-    })
-    // returns false if no ticker cookie has been declared yet
-    return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
-  }
-  
   // determines if the stock was already added to the homepage
   determineStockAdded = () => {
-    if (this.parseCookies()) {
-      let added = this.parseCookies().find(ticker => {
+    if (parseCookies()) {
+      let added = parseCookies().find(ticker => {
         return ticker === this.state.ticker;
       })
       return added ? true : false;
@@ -37,7 +29,7 @@ class StockNews extends React.Component {
   }
 
   addToHomepage = () => {
-    if (!this.parseCookies()) {
+    if (!parseCookies()) {
       document.cookie = 'ticker=[]';
     }
     // add or remove cookie
@@ -49,7 +41,7 @@ class StockNews extends React.Component {
   }
   
   addTicker = (ticker) => {
-    let parsedCookie = this.parseCookies();
+    let parsedCookie = parseCookies();
     if (parsedCookie.length < 8) {
       parsedCookie.push(ticker);
       document.cookie = `ticker=${JSON.stringify(parsedCookie)}`;
@@ -61,7 +53,7 @@ class StockNews extends React.Component {
   }
 
   removeTicker = (ticker) => {
-    let parsedCookie = this.parseCookies();
+    let parsedCookie = parseCookies();
     let removedCookie = parsedCookie.filter(val => {
       return val !== ticker
     })
@@ -79,10 +71,12 @@ class StockNews extends React.Component {
             <img src={icon} alt="Stockup Icon" className="stockupIcon" />
           </Link>
           <div className="addIconWrapper">
-            <img src={this.determineStockAdded() ? checkmarkIcon : addIcon}
-                 alt="Add Icon" 
-                 className={this.determineStockAdded() ? "addIcon added" : "addIcon"}
-                 onClick={this.addToHomepage} />
+            <img 
+              src={this.determineStockAdded() ? checkmarkIcon : addIcon}
+              alt="Add Icon" 
+              className={this.determineStockAdded() ? "addIcon added" : "addIcon"}
+              onClick={this.addToHomepage} 
+            />
             <div className={this.determineStockAdded() ? "addIconText added" : "addIconText"}>
               {this.determineStockAdded() ? "Remove from Home" : "Add to Homepage"}
             </div>

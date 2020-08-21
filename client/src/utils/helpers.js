@@ -20,3 +20,12 @@ export const formatNumber = number => { // formats large numbers
   if (number === 'N/A') { return number };
   if (number === 'Unavailable') { return number };
 }
+
+// returns array of saved stocks if it exists in cookies
+export const parseCookies = () => {
+  let tickerCookie = document.cookie.split(';').find(cookie => {
+    return cookie.includes('ticker');
+  })
+  // returns false if no ticker cookie has been declared yet
+  return tickerCookie ? JSON.parse(tickerCookie.split('=')[1]) : false;
+}

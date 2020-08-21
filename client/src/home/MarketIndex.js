@@ -16,7 +16,7 @@ class MarketIndexes extends React.Component {
 
   getETFData = async (etfArr) => {
     const stocksArr = etfArr.map(etf => etf.ticker);
-    let etfData = await getETFStocks(stocksArr);
+    const etfData = await getETFStocks(stocksArr);
     this.setState({ etfData });
   }
 
@@ -37,7 +37,12 @@ class MarketIndexes extends React.Component {
             return false;
           })
           
-          return <MarketIndex key={i} name={name} percent={calcPercentChange(etf.previousClose, etf.price)} percentColor={getPercentChangeColor(etf.previousClose, etf.price)}/>;
+          return <MarketIndex 
+            key={i} 
+            name={name} 
+            percent={calcPercentChange(etf.previousClose, etf.price)} 
+            percentColor={getPercentChangeColor(etf.previousClose, etf.price)}
+          />;
         })}
       </Fade>
     );
