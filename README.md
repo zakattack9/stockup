@@ -69,7 +69,7 @@ Below are some of the Finnhub API endpoints that Stockup uses or plans to use in
     - Exchange
     - Logo Image 
 - **[Company News](https://finnhub.io/docs/api#company-news)**
-  - **endpoint:** `/company-news?symbol=AAPL&from=${yyyy-mm-dd}&to=${yyyy-mm-dd}`
+  - **endpoint:** `/company-news?symbol=${ticker}&from=${yyyy-mm-dd}&to=${yyyy-mm-dd}`
   - **targeted fields:**
     - Source
     - Headline
