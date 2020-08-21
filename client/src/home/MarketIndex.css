@@ -10,6 +10,7 @@
 .indexName {
   font-family: 'Helvetica Outline';
   font-size: 1.5em;
+  white-space: pre-wrap;
   color: #535353;
 }
 

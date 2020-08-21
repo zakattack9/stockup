@@ -28,15 +28,14 @@ class StockData extends React.Component {
     formattedStockData['52WeekLow'] = stockData['52WeekLow'] ? `$${stockData['52WeekLow']}` : "Unavailable";
     formattedStockData.marketCap = stockData.marketCap ? formatNumber(stockData.marketCap) : "Unavailable";
     formattedStockData.avgVolume = stockData.avgVolume ? formatNumber(stockData.avgVolume) : "Unavailable";
-    formattedStockData.percentChange = calcPercentChange(stockData.open, stockData.price);
-    formattedStockData.percentChangeColor = getPercentChangeColor(stockData.open, stockData.price);
+    formattedStockData.percentChange = calcPercentChange(stockData.previousClose, stockData.price);
+    formattedStockData.percentChangeColor = getPercentChangeColor(stockData.previousClose, stockData.price);
     return formattedStockData;
   }
 
   getStockData = async (ticker) => {
     let unformattedStockData = await searchStock(ticker);
     const stockData = this.formatStockData(unformattedStockData);
-    console.log("STOCK DATA", stockData);
     this.setState({ stockData });
   }
 

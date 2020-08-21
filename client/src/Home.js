@@ -62,23 +62,20 @@ class Home extends React.Component {
     }
   }
 
-  // up to FIVE market indexes
   getMarketIndexes() {
+    const etfs = [
+      { name: "Dow Jones\n(DIA)", ticker: "DIA" }, // SPDR Dow Jones Industrial Average ETF
+      { name: "S&P 500\n(SPY)", ticker: "SPY" }, // SPDR S&P 500 ETF
+      { name: "Nasdaq\n(QQQ)", ticker: "QQQ" }, // Powershares QQQ ETF
+      { name: "Gold\n(GLD)", ticker: "GLD" }, // SPDR Gold Shares ETF
+      { name: "Russell 2000\n(IWM)", ticker: "IWM" }, // iShares Russell 2000 ETF
+    ];
+    
     // show only 3 market indexes if screen width is less than 700
     if (window.innerWidth < 700) {
-      return [
-        { name: "Dow 30", ticker: "^DJI" },
-        { name: "S&P 500", ticker: "^GSPC" },
-        { name: "Nasdaq", ticker: "^IXIC" }
-      ];
+      return etfs.slice(0, 3);
     } else {
-      return [
-        { name: "Dow 30", ticker: ".DJI" },
-        // { name: "S&P 500", ticker: "^GSPC" },
-        // { name: "Nasdaq", ticker: ".IXIC" },
-        // { name: "NYSE", ticker: "^NYA" },
-        // { name: "Russell 2000", ticker: "^RUT" }
-      ];
+      return etfs;
     }
   }
 
@@ -108,7 +105,7 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <div className="marketIndexWrapper">
-          {/* <MarketIndexes indexes={this.getMarketIndexes()} /> */}
+          <MarketIndexes etfs={this.getMarketIndexes()} />
         </div>
 
         <div className="searchWrapper">

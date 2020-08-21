@@ -1,6 +1,6 @@
 // handles calls to API from client side
 import axios from 'axios';
-import { stocks } from './data.js'; // for testing saved stocks on homepage
+// import { stocks } from './data.js'; // for testing saved stocks on homepage
 // import API_KEY from './creds.js';
 
 export async function searchStock(ticker) {
@@ -13,10 +13,10 @@ export async function searchStock(ticker) {
   return response.data;
 }
 
-export async function getExchanges(exchangesArr) {
-  let response = await axios.get('/exchanges', {
+export async function getETFStocks(tickersArr) {
+  let response = await axios.get('/etfData', {
     params: {
-      indexes: exchangesArr.toString()
+      etfs: tickersArr
     }
   })
 

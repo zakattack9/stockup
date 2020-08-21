@@ -42,9 +42,9 @@ app.get('/stockData', async function (req, res) {
   }
 })
 
-app.get('/exchanges', async function (req, res) {
+app.get('/etfData', async function (req, res) {
   try {
-    let stockData = await stockAPI.getExchanges(req.query.indexes);
+    let stockData = await stockAPI.getETFStocks(req.query.etfs);
     res.send(stockData);
   } catch(e) {
     throw e.message;

@@ -1,14 +1,17 @@
 const axios = require('axios');
+const BASE_URL = "https://finnhub.io/api/v1";
 
 // calls three different endpoints from finnhub API to retrieve all necessary data
 async function searchStock(ticker) {
-  const BASE_URL = "https://finnhub.io/api/v1";
   try {
     let stockData = {};
     let allRequests = [];
 
     allRequests.push(
-      axios.get(`${BASE_URL}/stock/profile2?symbol=${ticker}`, {
+      axios.get(`${BASE_URL}/stock/profile2`, {
+        params: {
+          symbol: ticker
+        },
         headers: { 
           "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
         }
@@ -25,7 +28,11 @@ async function searchStock(ticker) {
     );
 
     allRequests.push(
-      axios.get(`${BASE_URL}/stock/metric?symbol=${ticker}&metric=all`, {
+      axios.get(`${BASE_URL}/stock/metric`, {
+        params: {
+          symbol: ticker,
+          metric: 'all',
+        },
         headers: { 
           "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
         }
@@ -41,7 +48,10 @@ async function searchStock(ticker) {
     );
 
     allRequests.push(
-      axios.get(`${BASE_URL}/quote?symbol=${ticker}`, {
+      axios.get(`${BASE_URL}/quote`, {
+        params: {
+          symbol: ticker
+        },
         headers: { 
           "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
         }
@@ -59,39 +69,52 @@ async function searchStock(ticker) {
     );
     
     return Promise.all(allRequests).then(done => {
-      console.log("STOCK DATA", stockData);
       return stockData;
     })
   } catch(e) {
-    console.log(e)
+    console.error(e)
     throw e;
   }
 }
 
 // returns data for up to five stocks (used for homepage index tickers);
-async function getExchanges(exchangesArr) {
-  // MICs = ["XNAS", "XNYS", "XHKG", "XLON", "XTKS"]
+async function getETFStocks(tickersArr) {
   try {
-    let response = await axios.get(`http://api.marketstack.com/v1/exchanges`, {
-      params: {
-        access_key: process.env.API_KEY,   
-        // search: "XNYS"
-        // symbols: exchangesArr.toString(),
-        // limit: 100,
-      }
+    let stockData = [];
+    let allRequests = [];
+
+    tickersArr.forEach(ticker => {
+      allRequests.push(
+        axios.get(`${BASE_URL}/quote`, {
+          params: {
+            symbol: ticker
+          },
+          headers: { 
+            "X-Finnhub-Token" : process.env.API_KEY_FINNHUB
+          }
+        })
+        .then(({ data }) => {
+          stockData.push({
+            ticker,
+            open: data.o,
+            high: data.h,
+            low: data.l,
+            price: data.c,
+            previousClose: data.pc,
+          });
+        })
+        .catch(err => {
+          return new Error(`ETF Quote Error: ${err.message}`);
+        })
+      );
+    });
+
+    return Promise.all(allRequests).then(done => {
+      return stockData;
     })
 
-    console.log("RES", response)
-  
-    if (response.data.Message) {
-      if (response.data.Message.toLowerCase().includes("error")) {
-        return new Error(response.data.Message);
-      }
-    }
-  
-    return await response.data.data;
   } catch(e) {
-    console.log(e);
+    console.error("ETF STOCKS ERROR", e);
     throw e;
   }
 }
@@ -114,7 +137,7 @@ async function getBatchStockData(stocksArr) {
 
     return await response.data.data;
   } catch(e) {
-    console.log("BATCH ERROR", e)
+    console.error("BATCH ERROR", e)
     throw e;
   }
 }
@@ -158,5 +181,5 @@ async function getBatchStockData(stocksArr) {
 // }
 
 exports.searchStock = searchStock;
-exports.getExchanges = getExchanges;
+exports.getETFStocks = getETFStocks;
 exports.getBatchStockData = getBatchStockData;

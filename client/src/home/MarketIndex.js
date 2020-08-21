@@ -1,53 +1,43 @@
 import React from 'react';
-import { getExchanges } from '../api/api';
+import { getETFStocks } from '../api/api';
 import Fade from 'react-reveal/Fade';
+import { calcPercentChange, getPercentChangeColor } from '../utils/helpers';
 import './MarketIndex.css';
 
 class MarketIndexes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { indexData: null };
+    this.state = { etfData: null };
   }
 
   componentDidMount() {
-    console.log(this.props.indexes)
-    this.getIndexData(this.props.indexes);
+    this.getETFData(this.props.etfs);
   }
 
-  getIndexData = async (indexArr) => {
-    let stocksArr = [];
-    indexArr.forEach(index => { stocksArr.push(index.ticker); })
-    let indexData = await getExchanges(stocksArr);
-    console.log(indexData)
-    this.setState({ indexData });
-  }
-
-  getPercentChangeColor = (pctChange) => {
-    return +pctChange < 0 ? { color: '#FF6565' } : { color: '#61D474' };
-  }
-
-  getPercentChange = (pctChange) => { // determines whether to add "+" to positive percent change
-    return +pctChange > 0 ? `+${pctChange}` : pctChange;
+  getETFData = async (etfArr) => {
+    const stocksArr = etfArr.map(etf => etf.ticker);
+    let etfData = await getETFStocks(stocksArr);
+    this.setState({ etfData });
   }
 
   render() {
-    if (this.state.indexData === null) {
+    if (this.state.etfData === null) {
       return (<div className="MarketIndex"></div>);
     }
 
     return (
       <Fade top distance={'10px'} delay={150}>
-        {this.state.indexData.map((index, i) => {
+        {this.state.etfData.map((etf, i) => {
           let name;
-          this.props.indexes.map(obj => {
-            if (obj.ticker === index.symbol) {
+          this.props.etfs.map(obj => {
+            if (obj.ticker === etf.ticker) {
               name = obj.name;
               return true;
             }
             return false;
           })
           
-          return <MarketIndex key={i} name={name} percent={this.getPercentChange(index.change_pct)} percentColor={this.getPercentChangeColor(index.change_pct)}/>;
+          return <MarketIndex key={i} name={name} percent={calcPercentChange(etf.previousClose, etf.price)} percentColor={getPercentChangeColor(etf.previousClose, etf.price)}/>;
         })}
       </Fade>
     );
@@ -58,7 +48,7 @@ const MarketIndex = props => {
   return (
     <div className={"MarketIndex " + props.name}>
       <div className="indexName">{props.name}</div>
-      <div className="indexChange" style={props.percentColor}>{props.percent}%</div>
+      <div className="indexChange" style={props.percentColor}>{props.percent}</div>
     </div>
   );
 }
