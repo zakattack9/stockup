@@ -54,9 +54,7 @@ class StockNews extends React.Component {
 
   removeTicker = (ticker) => {
     let parsedCookie = parseCookies();
-    let removedCookie = parsedCookie.filter(val => {
-      return val !== ticker
-    })
+    let removedCookie = parsedCookie.filter(val => val !== ticker);
     document.cookie = `ticker=${JSON.stringify(removedCookie)}`;
     this.setState({ addedTicker: false });
   }
